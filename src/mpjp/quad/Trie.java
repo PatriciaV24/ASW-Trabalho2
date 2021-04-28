@@ -22,7 +22,6 @@ public abstract class Trie<T extends HasPoint> implements Element<T> {
 		this.topLeftY = topLeftY;
 	}
 	
-	abstract void accept​(Visitor<T> visitor);
 	
 	abstract void collectAll(Set<T> points);
 	
