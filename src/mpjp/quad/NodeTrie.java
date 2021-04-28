@@ -1,6 +1,7 @@
 package mpjp.quad;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,10 +12,10 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 
 	public NodeTrie(double topLeftX, double topLeftY, double bottomRightX, double bottomRightY) {
 		super(topLeftX, topLeftY, bottomRightX, bottomRightY);
-
+		tries = new HashMap<>();
 	}
 
-	@Override
+	
 	public void accept(Visitor<T> visitor) {
 		visitor.visit(this);
 	}
@@ -28,31 +29,26 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 	}
 
 	@Override
-	void collectNear(double x, double y, double radius, Set<T> points) {
+	void collectNear(double x, double y, double radius, Set<T> nodes) {
 		for (Quadrant q : tries.keySet()) {
 			Trie<T> trie = tries.get(q);
 			if (trie.overlaps(x, y, radius))
-				trie.collectNear(x, y, radius, points);
+				trie.collectNear(x, y, radius, nodes);
 		}
 	}
 
 	@Override
 	void delete(T point) {
-		for (Quadrant q : tries.keySet()) {
-			Trie<T> trie = tries.get(q);
-			trie.delete(point);
-		}
-
+		Quadrant q = quadrantOf(point);
+		Trie<T> trie = tries.get(q);
+		trie.delete(point);
 	}
 
 	@Override
 	T find(T point) {
-		for (Quadrant q : tries.keySet()) {
-			Trie<T> trie = tries.get(q);
-			if (trie.find(point) == point)
-				return point;
-		}
-		return null;
+		Quadrant q = quadrantOf(point);
+		Trie<T> trie = tries.get(q);
+		return trie.find(point);
 	}
 
 	Collection<Trie<T>> getTries() {
@@ -68,37 +64,34 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 			double centerx = (this.bottomRightX + this.topLeftX) / 2;
 			double centery = (this.bottomRightY + this.topLeftY) / 2;
 			
-			switch(q) {
-			case NW:
+			if (q == Quadrant.NW)
 				t = new LeafTrie<T>(topLeftX,topLeftY,centerx,centery);
-				break;
-			case NE:
-				t = new LeafTrie<T>(centerx,topLeftY,topLeftX,centery);
-				break;
-			case SW:
-				t = new LeafTrie<T>(topLeftX,centery,centerx,topLeftY);
-				break;
-			case SE:
-				t = new LeafTrie<T>(centerx,centery,bottomRightX,bottomRightY);
-				break;
+			else { if(q == Quadrant.NE)
+					t = new LeafTrie<T>(centerx,topLeftY,topLeftX,centery);
+				else { if(q == Quadrant.SW)
+						t = new LeafTrie<T>(topLeftX,centery,centerx,topLeftY);
+				else { if(q== Quadrant.SE)
+					t = new LeafTrie<T>(centerx,centery,bottomRightX,bottomRightY);
+					}
+				}
 			}
-			
 		}
+		t=t.insert(point);
 		
-		tries.put(q, t.insert(point));
+		tries.put(q, t);
 		return this;
 	}
 
 	@Override
 	Trie<T> insertReplace(T point) {
+		//REFAZER
 		Trie<T> trie = tries.get(this.quadrantOf(point));
 		return trie.insertReplace(point);
 	}
 
 	Quadrant quadrantOf(T point) {
-		double centerx, centery;
-		centerx = (this.bottomRightX + this.topLeftX) / 2;
-		centery = (this.bottomRightY + this.topLeftY) / 2;
+		double centerx = (this.bottomRightX + this.topLeftX) / 2;
+		double centery = (this.bottomRightY + this.topLeftY) / 2;
 		if (point.getX() > centerx && point.getY() > centery)
 			return Quadrant.NE;
 		if (point.getX() > centerx && point.getY() < centery)

@@ -2,6 +2,7 @@ package mpjp.quad;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -13,56 +14,53 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 
 	public LeafTrie(double topLeftX, double topLeftY, double bottomRightX, double bottomRightY) {
 		super(topLeftX, topLeftY, bottomRightX, bottomRightY);
-		this.points = new ArrayList<T>();
+		points = new ArrayList<T>();
 	}
 
-
-	@Override
 	public void accept(Visitor<T> visitor) {
 		visitor.visit(this);
 	}
 
-
 	@Override
-	void collectAll(Set<T> nodes) {
+	public void collectAll(Set<T> nodes) {
 		nodes.addAll(points);
 	}
 
-
 	@Override
-	void collectNear(double x, double y, double radius, Set<T> nodes) {
+	public void collectNear(double x, double y, double radius, Set<T> nodes) {
 		for(T current: points) {
-			if(getDistance(current.getX(),current.getY(),x,y)<=radius) 
+			if(getDistance(current.getX(),current.getY(),x,y) <= radius) 
 			nodes.add(current);
-			}	
+		}	
 	}
 
 
 	@Override
-	void delete(T point) {
+	public void delete(T point) {
 		for(T x: points) {
-			if((x.getX()==point.getX() && x.getY()==point.getY())) points.remove(x);
+			if((x.getX()==point.getX() && x.getY()==point.getY())) 
+				points.remove(x);
 		}
 		
 	}
 
-
 	@Override
-	T find(T point) {
+	public T find(T point) {
 		for(T x: points) {
-			if(x.getX()==point.getX() && x.getY()==point.getY()) return x;
+			if(x.getX()==point.getX() && x.getY()==point.getY()) 
+				return x;
 		}
 		return null;
 	}
 	
-	Collection<T> getPoints() {
+	public Collection<T> getPoints() {
 		return points;
 	}
 
 
 	@Override
-	Trie<T> insert(T point) {
-		if(points.size()< Trie.getCapacity()) {
+	public Trie<T> insert(T point) {
+		if(points.size()<Trie.getCapacity()) {
 			points.add(point);
 			return this;
 		}else{
@@ -77,13 +75,16 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 
 
 	@Override
-	Trie<T> insertReplace(T point) {
-		for(T x: points) {
-			if(x.getX()==point.getX() && x.getY()==point.getY()) 
-				points.remove(x);
+	public Trie<T> insertReplace(T point) {
+		Iterator<T> i = points.iterator();
+		
+		while (i.hasNext()){
+			T newiter =i.next();
+			if((newiter.getX()==point.getX() && (newiter.getY()==point.getY())))
+				i.remove();
+			
 		}
-		points.add(point);
-		return this;
+		return this.insert(point);
 	}
 
 	@Override
