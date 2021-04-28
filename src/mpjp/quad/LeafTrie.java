@@ -11,8 +11,8 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 	List<T> points;
 
 
-	public LeafTrie(double bottomRightX, double bottomRightY, double topLeftX, double topLeftY) {
-		super(bottomRightX, bottomRightY, topLeftX, topLeftY);
+	public LeafTrie(double topLeftX, double topLeftY, double bottomRightX, double bottomRightY) {
+		super(topLeftX, topLeftY, bottomRightX, bottomRightY);
 		this.points = new ArrayList<T>();
 	}
 
@@ -62,19 +62,17 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	Trie<T> insert(T point) {
-		if(points.size()<capacity) {
+		if(points.size()< Trie.getCapacity()) {
 			points.add(point);
 			return this;
+		}else{
+			Trie<T> nTrie = new NodeTrie<T> (this.topLeftX,this.topLeftY, this.bottomRightX,this.bottomRightY);
+			for(T p: points) {
+				nTrie.insert(p);
 			}
-			else {
-				Trie<T> nTrie = new NodeTrie<T>(this.bottomRightX, this.bottomRightY, this.topLeftX, this.topLeftY);
-				for(T p: points) {
-					nTrie.insert(p);
-				}
-			
-				nTrie.insert(point);
-				return nTrie;
-			}
+			nTrie.insert(point);
+			return nTrie;
+		}
 	}
 
 
@@ -87,9 +85,6 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 		points.add(point);
 		return this;
 	}
-
-
-
 
 	@Override
 	public String toString() {

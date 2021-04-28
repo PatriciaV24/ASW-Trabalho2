@@ -3,13 +3,15 @@ package mpjp.quad;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+
 import mpjp.shared.HasPoint;
 
 public class NodeTrie<T extends HasPoint> extends Trie<T> {
 	Map<Quadrant, Trie<T>> tries;
 
-	public NodeTrie(double bottomRightX, double bottomRightY, double topLeftX, double topLeftY) {
-		super(bottomRightX, bottomRightY, topLeftX, topLeftY);
+	public NodeTrie (double topLeftX, double topLeftY, double bottomRightX, double bottomRightY){
+		super(topLeftX, topLeftY, bottomRightX, bottomRightY);
+
 	}
 	
 	@Override
@@ -59,8 +61,7 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	Trie<T> insert(T point) {
-		Trie<T> trie = tries.get(this.quadrantOf(point));
-		return trie.insert(point);
+		
 	}
 
 	@Override
@@ -69,14 +70,20 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 		return trie.insertReplace(point);
 	}
 
-	Trie.Quadrant quadrantOf(T point) {
-		for (Quadrant q : tries.keySet()) {
-			Trie<T> trie = tries.get(q);
-			if(point.getX()>trie.topLeftX && 
-			   point.getX()<trie.bottomRightX &&
-			   point.getY()>trie.bottomRightY &&
-			   point.getY()<trie.topLeftY) return q;
-		}
+
+	Quadrant quadrantOf(T point) {
+		double centerx, centery;
+		centerx= (this.bottomRightX+this.topLeftX)/2;
+		centery= (this.bottomRightY+this.topLeftY)/2;		
+		if(point.getX()> centerx && point.getY()> centery)
+			return Quadrant.NE;
+		if(point.getX()> centerx && point.getY()< centery)
+			return Quadrant.SE;
+		if(point.getX()< centerx && point.getY()> centery)
+			return Quadrant.NW;
+		if(point.getX()< centerx && point.getY()< centery)
+			return Quadrant.SW;
+	
 		return null;
 	}
 

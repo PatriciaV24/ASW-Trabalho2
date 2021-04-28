@@ -13,7 +13,7 @@ implements Serializable {
 	public PieceShape() {}
 
 	public PieceShape(Point startPoint) {
-		segments= new ArrayList<Segment>();
+		this.segments= new ArrayList<Segment>();
 		this.startPoint = startPoint;
 	}
 

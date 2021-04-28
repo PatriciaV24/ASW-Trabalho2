@@ -14,8 +14,8 @@ public abstract class Trie<T extends HasPoint> implements Element<T> {
 	public enum Quadrant{
 		NE,NW,SE,SW;
 	}
-	
-	protected Trie(double bottomRightX, double bottomRightY, double topLeftX, double topLeftY) {
+
+	protected Trie(double topLeftX, double topLeftY, double bottomRightX, double bottomRightY) {
 		this.bottomRightX = bottomRightX;
 		this.bottomRightY = bottomRightY;
 		this.topLeftX = topLeftX;
