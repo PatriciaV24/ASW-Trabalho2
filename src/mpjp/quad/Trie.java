@@ -22,13 +22,15 @@ public abstract class Trie<T extends HasPoint> implements Element<T> {
 		this.topLeftY = topLeftY;
 	}
 	
+	abstract void accept​(Visitor<T> visitor);
+	
 	abstract void collectAll(Set<T> points);
 	
 	abstract void collectNear(double x, double y, double radius, Set<T> points);
 	
 	abstract void delete(T point);
 	
-	abstract void find(T point);
+	abstract T find(T point);
 	
 	public static int getCapacity() {
 		return capacity;

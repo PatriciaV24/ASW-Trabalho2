@@ -15,42 +15,63 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 		super(bottomRightX, bottomRightY, topLeftX, topLeftY);
 	}
 
-	void accept​(Visitor<T> visitor) {
+	
+	public void accept​(Visitor<T> visitor) {
 		visitor.visit(this);
 	}
 
 	void collectAll​(java.util.Set<T> points) {
-
+		for (Quadrant q : tries.keySet()) {
+			Trie<T> trie = tries.get(q);
+			trie.collectAll(points);
+		}
 	}
 
 	void collectNear​(double x, double y, double radius, Set<T> nodes) {
+		for (Quadrant q : tries.keySet()) {
+			Trie<T> trie = tries.get(q);
+			if (trie.overlaps(x, y, radius))
+				trie.collectNear(x, y, radius, nodes);
+		}
 
 	}
 
 	void delete​(T point) {
-		tries.containsValue(this);
+		for (Quadrant q : tries.keySet()) {
+			Trie<T> trie = tries.get(q);
+			trie.delete(point);
+		}
 	}
 
 	T find​(T point) {
-		if(tries.containsValue(point)) return point;
+		for (Quadrant q : tries.keySet()) {
+			Trie<T> trie = tries.get(q);
+			if(trie.find(point)==point) return point;
+		}
 		return null;
 	}
 
 	Collection<Trie<T>> getTries() {
-		return null; // idk yet
+		return tries.values();
 	}
 
 	Trie<T> insert(T point) {
-		return this;
+		Trie<T> trie = tries.get(this.quadrantOf(point));
+		return trie.insert(point);
 	}
 
 	Trie<T> insertReplace(T point) {
-		return this;
-	}
+			Trie<T> trie = tries.get(this.quadrantOf(point));
+			return trie.insertReplace(point);
+			}
 
 	Trie.Quadrant quadrantOf(T point) {
-		for(Entry<Quadrant, Trie<T>> entry: tries.entrySet()) {
-			 if (entry.getValue().equals(point)) return entry.getKey();
+		for (Quadrant q : tries.keySet()) {
+			Trie<T> trie = tries.get(q);
+			if(point.getX()>trie.topLeftX && 
+			   point.getX()<trie.bottomRightX &&
+			   point.getY()>trie.bottomRightY &&
+			   point.getY()<trie.topLeftY) return q;
 		}
 		return null;
 	}
@@ -59,5 +80,5 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 	public String toString() {
 		return "NodeTrie [tries=" + tries + "]";
 	}
-	
+
 }
