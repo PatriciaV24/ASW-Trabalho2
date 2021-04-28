@@ -1,5 +1,7 @@
 package mpjp.quad;
 
+import mpjp.shared.HasPoint;
+
 /**
  * Helper test class implementing the HasPoint interface
  * 
