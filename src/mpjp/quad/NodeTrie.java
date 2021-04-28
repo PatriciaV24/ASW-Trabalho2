@@ -2,6 +2,7 @@ package mpjp.quad;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import mpjp.quad.Trie.Quadrant;
@@ -15,7 +16,7 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 	}
 
 	void accept​(Visitor<T> visitor) {
-
+		visitor.visit(this);
 	}
 
 	void collectAll​(java.util.Set<T> points) {
@@ -27,33 +28,36 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 	}
 
 	void delete​(T point) {
-
+		tries.containsValue(this);
 	}
 
 	T find​(T point) {
-		return point;
+		if(tries.containsValue(point)) return point;
+		return null;
 	}
 
 	Collection<Trie<T>> getTries() {
-		return; // idk yet
+		return null; // idk yet
 	}
 
 	Trie<T> insert(T point) {
-		return;
+		return this;
 	}
 
 	Trie<T> insertReplace(T point) {
-		return;
+		return this;
 	}
 
 	Trie.Quadrant quadrantOf(T point) {
-		return;
+		for(Entry<Quadrant, Trie<T>> entry: tries.entrySet()) {
+			 if (entry.getValue().equals(point)) return entry.getKey();
+		}
+		return null;
 	}
 
 	@Override
 	public String toString() {
 		return "NodeTrie [tries=" + tries + "]";
 	}
-	
 	
 }
