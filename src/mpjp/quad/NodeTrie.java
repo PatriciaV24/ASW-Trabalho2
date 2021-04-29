@@ -84,7 +84,8 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	Trie<T> insertReplace(T point) {
-		//REFAZER
+		//REFAZER 
+		//AGAIN
 		Trie<T> trie = tries.get(this.quadrantOf(point));
 		return trie.insertReplace(point);
 	}
