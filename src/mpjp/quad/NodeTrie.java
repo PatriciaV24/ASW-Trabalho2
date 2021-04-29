@@ -30,11 +30,11 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	void collectNear(double x, double y, double radius, Set<T> nodes) {
-		for (Quadrant q : tries.keySet()) {
-			Trie<T> trie = tries.get(q);
-			if (trie.overlaps(x, y, radius))
+		if (overlaps(x, y, radius))
+			for (Quadrant q : tries.keySet()) {
+				Trie<T> trie = tries.get(q);
 				trie.collectNear(x, y, radius, nodes);
-		}
+			}
 	}
 
 	@Override
@@ -68,18 +68,19 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 			double centery = (this.bottomRightY + this.topLeftY) / 2;
 			
 			switch(q) {
-			case NW:
-				t = new LeafTrie<T>(topLeftX,topLeftY,centerx,centery);
-				break;
 			case NE:
 				t = new LeafTrie<T>(centerx,topLeftY,topLeftX,centery);
 				break;
-			case SW:
-				t = new LeafTrie<T>(topLeftX,centery,centerx,topLeftY);
+			case NW:
+				t = new LeafTrie<T>(topLeftX,topLeftY,centerx,centery);
 				break;
 			case SE:
 				t = new LeafTrie<T>(centerx,centery,bottomRightX,bottomRightY);
 				break;
+			case SW:
+				t = new LeafTrie<T>(topLeftX,centery,centerx,topLeftY);
+				break;
+			
 			}
 		}
 		tries.put(q, t.insert(point));
@@ -99,9 +100,9 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 			return Quadrant.NE;
 		if (point.getX() >= centerx && point.getY() <= centery)
 			return Quadrant.SE;
-		if (point.getX() < centerx && point.getY() > centery)
+		if (point.getX() <= centerx && point.getY() >= centery)
 			return Quadrant.NW;
-		if (point.getX() < centerx && point.getY() < centery)
+		if (point.getX() <= centerx && point.getY() <= centery)
 			return Quadrant.SW;
 
 		return null;

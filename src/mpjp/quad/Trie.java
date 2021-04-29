@@ -44,15 +44,24 @@ public abstract class Trie<T extends HasPoint> implements Element<T> {
 	abstract Trie<T> insertReplace(T point);
 	
 	
+	/*boolean overlaps(double x, double y, double radius) {
+		double RectWidth = topLeftX;
+		double RectHeight =topLeftY;
+		double RectX = bottomRightX;
+		double RectY = bottomRightY;
+		
+		double DeltaX = x - Math.max(RectX, Math.min (x, RectWidth));
+		double DeltaY = y - Math.max(RectY, Math.min (y, RectHeight));
+		return  ( DeltaX * DeltaX + DeltaY * DeltaY ) < ( radius * radius ) ;
+	}*/
+	
 	boolean overlaps(double x, double y, double radius) {
-		if(Math.pow(bottomRightX-x,2) + Math.pow(bottomRightY-y,2) < Math.pow(radius,2)) 
-			return true;
-		
-		if(Math.pow(topLeftX-x,2) + Math.pow(topLeftY-y,2) < Math.pow(radius,2)) 
-			return true;
-		
-		return false;	
+		double Width = (x - Math.max(topLeftX, Math.min(x, bottomRightX)));
+        double Height = (y - Math.max(bottomRightY, Math.min(y, topLeftY)));
+
+        return (Math.pow(Width, 2) + Math.pow(Height, 2) <= Math.pow(radius, 2));
 	}
+
 	
 	static void setCapacity(int capacity) {
 		Trie.capacity=capacity;
