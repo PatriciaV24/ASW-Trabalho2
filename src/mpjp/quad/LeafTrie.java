@@ -28,10 +28,9 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 	public void collectNear(double x, double y, double radius, Set<T> nodes) {
 		for(T current: points) {
 			if(getDistance(current.getX(),current.getY(),x,y) <= radius) 
-			nodes.add(current);
+				nodes.add(current);
 		}	
 	}
-
 
 	@Override
 	public void delete(T point) {
@@ -50,7 +49,6 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 	public Collection<T> getPoints() {
 		return this.points;
 	}
-
 
 	@Override
 	public Trie<T> insert(T point) {
