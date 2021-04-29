@@ -2,19 +2,17 @@ package mpjp.quad;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import mpjp.shared.HasPoint;
 
 public class LeafTrie<T extends HasPoint> extends Trie<T> {
-	List<T> points;
-
+	private List<T> points;
 
 	public LeafTrie(double topLeftX, double topLeftY, double bottomRightX, double bottomRightY) {
 		super(topLeftX, topLeftY, bottomRightX, bottomRightY);
-		points = new ArrayList<T>();
+		points = new ArrayList<T>(Trie.getCapacity());
 	}
 
 	public void accept(Visitor<T> visitor) {
@@ -37,11 +35,7 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	public void delete(T point) {
-		for(T x: points) {
-			if((x.getX()==point.getX() && x.getY()==point.getY())) 
-				points.remove(x);
-		}
-		
+		this.points.remove(point);
 	}
 
 	@Override
@@ -54,14 +48,14 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 	}
 	
 	public Collection<T> getPoints() {
-		return points;
+		return this.points;
 	}
 
 
 	@Override
 	public Trie<T> insert(T point) {
-		if(points.size()<Trie.getCapacity()) {
-			points.add(point);
+		if(this.points.size()<Trie.getCapacity()) {
+			this.points.add(point);
 			return this;
 		}else{
 			Trie<T> nTrie = new NodeTrie<T> (this.topLeftX,this.topLeftY, this.bottomRightX,this.bottomRightY);
@@ -76,14 +70,7 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	public Trie<T> insertReplace(T point) {
-		Iterator<T> i = points.iterator();
-		
-		while (i.hasNext()){
-			T newiter =i.next();
-			if((newiter.getX()==point.getX() && (newiter.getY()==point.getY())))
-				i.remove();
-			
-		}
+		this.points.removeIf(p -> p.getX()==point.getX() && p.getY()==point.getY());
 		return this.insert(point);
 	}
 
