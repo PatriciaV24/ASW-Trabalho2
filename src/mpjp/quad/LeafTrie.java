@@ -12,7 +12,7 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 
 	public LeafTrie(double topLeftX, double topLeftY, double bottomRightX, double bottomRightY) {
 		super(topLeftX, topLeftY, bottomRightX, bottomRightY);
-		points = new ArrayList<T>(Trie.getCapacity());
+		this.points = new ArrayList<T>(Trie.getCapacity());
 	}
 
 	public void accept(Visitor<T> visitor) {
@@ -26,7 +26,7 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	public void collectNear(double x, double y, double radius, Set<T> nodes) {
-		for(T current: points) {
+		for(T current: this.points) {
 			if(getDistance(current.getX(),current.getY(),x,y) <= radius) 
 				nodes.add(current);
 		}	
@@ -52,16 +52,16 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	public Trie<T> insert(T point) {
-		if(this.points.size()<Trie.getCapacity()) {
-			this.points.add(point);
-			return this;
-		}else{
-			Trie<T> nTrie = new NodeTrie<T> (this.topLeftX,this.topLeftY, this.bottomRightX,this.bottomRightY);
-			for(T p: points) {
-				nTrie.insert(p);
+		if (Trie.capacity == this.points.size()) {
+			NodeTrie<T> node = new NodeTrie<>(this.topLeftX, this.topLeftY, this.bottomRightX, this.bottomRightY);
+			node.insert(point);
+			for (T t : points) {
+				node.insert(t);
 			}
-			nTrie.insert(point);
-			return nTrie;
+			return node;
+		} else {
+			points.add(point);
+			return this;
 		}
 	}
 
