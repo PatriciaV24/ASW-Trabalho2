@@ -1,33 +1,40 @@
 package mpjp.game;
-
-import java.awt.Point;
-import java.util.HashMap;
-import java.util.Map;
-
-import mpjp.shared.MPJPExeption;
+import mpjp.shared.MPJPException;
 import mpjp.shared.PuzzleInfo;
+import mpjp.shared.geom.Point;
 
-public class PuzzleStructure {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+import java.util.stream.IntStream;
+
+public class PuzzleStructure implements Iterable<Integer>{
 	int rows, columns;
-	double width, heigth;
-	PuzzleInfo info;
+	double width, height;
 
-	public PuzzleStructure(int rows, int collumns, double width, double heigth) {
+	public PuzzleStructure(int rows, int collumns, double width, double height) {
 		this.rows = rows;
 		this.columns = collumns;
 		this.width = width;
-		this.heigth = heigth;
+		this.height = height;
 	}
 
 	public PuzzleStructure(PuzzleInfo info) {
 		this.rows = info.getRows();
 		this.columns = info.getColumns();
 		this.width = info.getWidth();
-		this.heigth = info.getHeight();
+		this.height = info.getHeight();
 	}
 
+	void init(int rows, int columns, double width,double height) {
+	}
+	
+	
 	public int getPieceCount() {
-		return getColumns() * getRows();
+		return getRows()* getColumns();
 	}
 
 	public int getRows() {
@@ -54,142 +61,113 @@ public class PuzzleStructure {
 		this.width = width;
 	}
 
-	public double getHeigth() {
-		return heigth;
+	public double getHeight() {
+		return height;
 	}
 
-	public void setHeigth(double heigth) {
-		this.heigth = heigth;
+	public void setHeight(double height) {
+		this.height = height;
 	}
-
+	
 	public double getPieceWidth() {
-		return this.getWidth() / this.getRows();
+		return this.getWidth() / this.getColumns();
 	}
-
+	
 	public double getPieceHeight() {
-		return this.getHeigth() / this.getColumns();
+		return this.getHeight() / this.getRows();
 	}
-
-	public boolean validId(int id) {
-		return id >= 0 || id < getPieceCount();
+	
+	private boolean validId(int id) {
+		return (id >= 0 && id < getPieceCount());
 
 	}
-
+	
 	public Integer getPieceFacing(Direction direction, Integer id) {
-		if (validId(id) == false) {
+		if (!validId(id)) {
 			return null;
 		}
 		switch (direction) {
-		case NORTH: {
-			if (validId(id - getColumns()))
-				return null;
-			else
-				return id - getColumns();
+			case NORTH:
+				if (validId(id - getColumns()))
+					return id - getColumns();
+				break;
+	
+			case SOUTH:
+				if (validId(id + getColumns()))
+					return id + getColumns();
+				break;
+			
+			case WEST: 
+				if (validId(id % getColumns()-1))
+					return id -1;
+				break;	
+						
+			case EAST:
+				if (validId(id % getColumns()+1))
+					return id +1;
 		}
-
-		case SOUTH: {
-			if (validId(id + getColumns()))
-				return null;
-			else
-				return id + getColumns();
-		}
-
-		case WEST: {
-			if (validId(id - getRows()))
-				return null;
-			else
-				return id - getRows();
-		}
-
-		case EAST: {
-			if (validId(id + getRows()))
-				return null;
-			else
-				return id + getRows();
-		}
-
-		default:
-			return null;
-		}
+		return null;
 	}
-
-	Point getPieceCenterFacing(Direction direction, Point point) {
-		int newX = point.x, newY = point.y;
-
-		switch (direction) {
-
-		case NORTH: {
-			newY -= getPieceHeight();
-		}
-			break;
-
-		case SOUTH: {
-			newY += getPieceHeight();
-			break;
-		}
-
-		case WEST: {
-			newX -= getPieceWidth();
-			break;
-		}
-
-		case EAST: {
-			newX += getPieceWidth();
-			break;
-		}
-
-		default:
-			break;
-		}
-
-		Point newPoint = new Point(newX, newY);
-		return newPoint;
+	public Point getPieceCenterFacing​(Direction direction,Point point) {
+		Point p =new Point();
+		​
+		return point;
 	}
-
-	public int getPieceRow(int id) throws MPJPExeption {
-		if (id >= 0 || id < getPieceCount()) {
-			return id % getColumns();
-		}
-
-		throw new MPJPExeption();
+	
+	public int getPieceRow​(int id) throws MPJPException{
+		if (!validId(id)) 
+			throw new MPJPException();
+		return id / getColumns();
 	}
-
-	public int getPieceColumn(int id) throws MPJPExeption {
-		if (id >= 0 || id < getPieceCount()) {
-			return id / getRows();
-		}
-
-		throw new MPJPExeption();
+	
+	public int getPieceColumn​(int id) throws MPJPException{
+		if (!validId(id)) 
+			throw new MPJPException();
+		return id % getColumns();
 	}
-
-	public Map<Integer, Point> getStandardLocations() throws MPJPExeption {
-		
+	
+	public Map<Integer,Point> getStandardLocations(){
 		Map<Integer, Point> map = new HashMap<Integer, Point>();
 		int count = getPieceCount();
 		
 		for (int i = 0; i < count; i++) {
-			Point tmp = getPieceStandardCenter(i);
+			try {
+			Point tmp = getPieceStandardCenter​(i);
 			map.put(i, tmp);
+			}catch (MPJPException e) {
+				e.printStackTrace();
 			}
+		}
 		return map;
 	}
-
-	public Point getPieceStandardCenter(int id) throws MPJPExeption {
-		int x, y;
-		if(validId(id)) {
-		
-		x =(int) (getPieceRow(id)+(getPieceWidth()/2));
-		y= (int) (getPieceColumn(id)+(getPieceHeight()/2));
-		
-		Point p =new Point();
-		p.x=x;
-		p.y=y;
-		
-		return p;
-		}
-		
-		return null;
 	
+	public Point getPieceStandardCenter​(int id) throws MPJPException{
+		if(validId(id)) {
+			int pC= this.getPieceColumn​(id);
+			int pR=this.getPieceRow​(id);
+			
+			Point p =new Point();
+			
+			p.setX(pC* getPieceWidth() + getPieceWidth()/2);
+			p.setY(pR * getPieceHeight()+ getPieceHeight()/2);
+			return p;
+		}
+		throw new MPJPException();
 	}
 
+	public Set<Integer> getPossiblePiecesInStandarFor​(Point point){
+		return null;
+	}
+	public Point getRandomPointInStandardPuzzle() {
+		Random r = new Random();
+		Point p= new Point();
+		p.setX(getWidth()* r.nextDouble());
+		p.setY(getHeight()* r.nextDouble());
+		return p;
+	}
+	
+	@Override
+	public Iterator<Integer> iterator(){
+		return IntStream.range(0, getPieceCount()).iterator();
+	}
 }
