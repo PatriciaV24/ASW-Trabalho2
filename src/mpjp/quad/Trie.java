@@ -5,6 +5,7 @@ import java.util.Set;
 import mpjp.shared.HasPoint;
 
 public abstract class Trie<T extends HasPoint> implements Element<T> {
+	private static final int DEFAULTCAPACITY = 8;
 	protected double bottomRightX;
 	protected double bottomRightY;
 	protected double topLeftX;
@@ -20,6 +21,7 @@ public abstract class Trie<T extends HasPoint> implements Element<T> {
 		this.bottomRightY = bottomRightY;
 		this.topLeftX = topLeftX;
 		this.topLeftY = topLeftY;
+		capacity=DEFAULTCAPACITY; 
 	}
 	
 	
