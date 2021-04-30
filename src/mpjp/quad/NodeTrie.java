@@ -62,23 +62,23 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	Trie<T> insert(T point) {
-		Quadrant quadrante = quadrantOf(point);
-		Trie<T> trie = tries.get(quadrante);
+		Quadrant q = quadrantOf(point);
+		Trie<T> trie = tries.get(q);
 		if (trie == null) {
-			trie = newLeafTreeByQuadrant(quadrante);
+			trie = newLeafTreeByQuadrant(q);
 		}
-		tries.put(quadrante, trie.insert(point));
+		tries.put(q, trie.insert(point));
 		return this;
 	}
 
 	@Override
 	Trie<T> insertReplace(T point) {
-		Quadrant quadrante = quadrantOf(point);
-		Trie<T> trie = tries.get(quadrante);
+		Quadrant q = quadrantOf(point);
+		Trie<T> trie = tries.get(q);
 		if (trie == null) {
-			trie = newLeafTreeByQuadrant(quadrante);
+			trie = newLeafTreeByQuadrant(q);
 		}
-		tries.put(quadrante, trie.insertReplace(point));
+		tries.put(q, trie.insertReplace(point));
 		return this;
 	}
 
