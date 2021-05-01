@@ -24,10 +24,7 @@ public class PuzzleStructure implements Iterable<Integer>{
 	}
 
 	public PuzzleStructure(PuzzleInfo info) {
-		this.rows = info.getRows();
-		this.columns = info.getColumns();
-		this.width = info.getWidth();
-		this.height = info.getHeight();
+		this(info.getRows(), info.getColumns(), info.getWidth(), info.getHeight());
 	}
 
 	void init(int rows, int columns, double width,double height) {
