@@ -154,10 +154,10 @@ public abstract class CuttingTest extends PuzzleData {
 			Point point = structure.getRandomPointInStandardPuzzle();
 			int count = 0;
 			
-			for(int id: structure.getPossiblePiecesInStandarFor(point)) {
+			for(int id: structure.getPossiblePiecesInStandarFor​(point)) {
 				PieceShape boundary = shapes.get(id);
 				Shape shape = ShapeChanger.getShape(boundary);
-				Point center = structure.getPieceStandardCenter(id);
+				Point center = structure.getPieceStandardCenter​(id);
 				AffineTransform transform = new AffineTransform();
 				
 				transform.translate(center.getX(), center.getY());
