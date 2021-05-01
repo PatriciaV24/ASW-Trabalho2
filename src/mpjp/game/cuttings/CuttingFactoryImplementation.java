@@ -5,10 +5,7 @@ import java.util.Set;
 
 import mpjp.shared.MPJPException;
 
-public class CuttingFactoryImplementation
-implements CuttingFactory{
-
-	
+public class CuttingFactoryImplementation implements CuttingFactory{
 	
 	public CuttingFactoryImplementation() {
 		super();
@@ -18,21 +15,21 @@ implements CuttingFactory{
 	public Cutting createCutting(String name) throws MPJPException {
 		Cutting c = null;
 		switch (name) {
-		case "Round":
-			c = new RoundCutting();
-			break;
-			
-		case "Standard":
-			c = new StandardCutting();
-			break;
-			
-		case "Straight":
-			c = new StraightCutting();
-			break;
-			
-		case "Triangular":
-			c = new TriangularCutting();
-			break;
+			case "Round":	
+				c = new RoundCutting();
+				break;
+				
+			case "Standard":
+				c = new StandardCutting();
+				break;
+				
+			case "Straight":
+				c = new StraightCutting();
+				break;
+				
+			case "Triangular":
+				c = new TriangularCutting();
+				break;
 		}
 		return c;
 	}

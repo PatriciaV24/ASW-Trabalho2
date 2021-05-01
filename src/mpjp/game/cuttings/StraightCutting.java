@@ -17,28 +17,22 @@ public class StraightCutting implements Cutting {
 
 	public Map<Integer, PieceShape> getShapes(PuzzleStructure structure) {
 		Map<Integer, PieceShape> map = new HashMap<Integer, PieceShape>();
-
-		double centerPointX = structure.getPieceWidth() / 2;
-		double centerPointY = structure.getPieceHeight() / 2;
-
-		Point  bottomRight = new Point(centerPointX, centerPointY);
-		Point  topRight= new Point(-centerPointX, centerPointY);
-
-		Point  bottomLeft = new Point(centerPointX, -centerPointY);
-		Point  topLeft= new Point(-centerPointX, -centerPointY);
-
 		
-		PieceShape piece = new PieceShape(bottomRight)
-		.addSegment(new LineTo(bottomLeft))
-		.addSegment(new LineTo(topLeft))
-		.addSegment(new LineTo(topRight))
-		.addSegment(new LineTo(bottomRight));
-	
+		int rows= structure.getRows();
+		int cols= structure.getColumns();
+		double x = structure.getPieceWidth() / 2;
+		double y = structure.getPieceHeight() / 2;
 		
-		// TODO adicionar os pontos ao piece
-
-		for (int i = 0; i < structure.getPieceCount(); i++) map.put(i, piece);
-		
+		for(int r=0; r<rows; r++) {
+			for(int c=0; c<cols; c++) {
+				PieceShape piece = new PieceShape(new Point(-x,-y)) //Cima Esquerdo
+							.addSegment(new LineTo(new Point(-x,y)))//Baixo Esquerdo
+							.addSegment(new LineTo(new Point(x,y)))  //Baixo Direita
+							.addSegment(new LineTo(new Point(x,-y))) //Cima Direita
+							.addSegment(new LineTo(new Point(-x,-y))); //Inicio
+				map.put(r*cols+c, piece);
+			}
+		}
 		return map;
 	}
 }

@@ -11,13 +11,13 @@ import mpjp.shared.geom.PieceShape;
 public class StandardCutting implements Cutting {
 
 	public StandardCutting() {
-		super();
+		
 	}
 
 	public Map<Integer, PieceShape> getShapes(PuzzleStructure structure) {
 		Map<Integer, PieceShape> map = new HashMap<Integer, PieceShape>();
 		for (int i = 0; i < structure.getPieceCount(); i++) {
-
+			//TODO - StandardCutting
 		}
 		return map;
 	}
