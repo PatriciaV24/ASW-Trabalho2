@@ -308,7 +308,8 @@ public class PointQuadtreeTest {
 	@Test
 	public void testPortugueseLocations() {
 		
-		for(String name: new String[] { "Porto", "Lisboa", "Coimbra", "Faro", "Valença", "Bragança", "Vila Real de Santo António", "Sagres"}) {
+		for(String name: new String[] { "Porto", "Lisboa", "Coimbra", "Faro", 
+				"Valença", "Bragança", "Vila Real de Santo António", "Sagres"}) {
 			testLocationsAround(locations.get(name),0.01,5.0);
 		}
 	}

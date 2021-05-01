@@ -3,7 +3,7 @@ import mpjp.shared.MPJPException;
 import mpjp.shared.PuzzleInfo;
 import mpjp.shared.geom.Point;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
