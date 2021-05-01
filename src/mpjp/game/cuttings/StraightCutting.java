@@ -28,17 +28,17 @@ public class StraightCutting implements Cutting {
 		Point  topLeft= new Point(-centerPointX, -centerPointY);
 
 		
-		PieceShape piece = new PieceShape();
-		piece.setStartPoint(bottomRight);
-		piece.addSegment(new LineTo(bottomLeft));
-		piece.addSegment(new LineTo(topLeft));
-		piece.addSegment(new LineTo(topRight));
+		PieceShape piece = new PieceShape(bottomRight)
+		.addSegment(new LineTo(bottomLeft))
+		.addSegment(new LineTo(topLeft))
+		.addSegment(new LineTo(topRight))
+		.addSegment(new LineTo(bottomRight));
 	
 		
 		// TODO adicionar os pontos ao piece
 
-		for (int i = 0; i < structure.getPieceCount(); i++)
-			map.put(i, piece);
+		for (int i = 0; i < structure.getPieceCount(); i++) map.put(i, piece);
+		
 		return map;
 	}
 }
