@@ -5,6 +5,7 @@ import mpjp.shared.geom.Point;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
@@ -83,7 +84,7 @@ public class PuzzleStructure implements Iterable<Integer>{
 	}
 	
 	public Integer getPieceFacing(Direction direction, Integer id) {
-		if (!validId(id)) {
+		if (id==null || !validId(id)) {
 			return null;
 		}
 		switch (direction) {
@@ -98,20 +99,43 @@ public class PuzzleStructure implements Iterable<Integer>{
 				break;
 			
 			case WEST: 
-				if (validId(id % getColumns()-1))
+				if (id % getColumns()!=0)
 					return id -1;
 				break;	
 						
 			case EAST:
-				if (validId(id % getColumns()+1))
-					return id +1;
+				if (id % getColumns()!=(getColumns()-1))
+					return id+1;
 		}
 		return null;
 	}
-	public Point getPieceCenterFacing​(Direction direction,Point point) {
-		Point p =new Point();
-		​
-		return point;
+	
+	public Point getPieceCenterFacing​(Direction direction, Point point) {
+		Point p = new Point();
+		
+		double x=point.getX();
+		double y=point.getY();
+		
+		switch (direction) {
+			case NORTH:
+				p.setX(x);
+				p.setY(point.getY()-getPieceHeight());
+				return p;
+			case SOUTH:
+				p.setX(x);
+				p.setY(point.getY()+getPieceHeight());
+				return p;
+			case WEST:
+				p.setX(point.getX()-getPieceWidth());
+				p.setY(y);
+				return p;
+			case EAST:
+				p.setX(point.getX()+getPieceWidth());
+				p.setY(y);
+				return p;
+			default:
+				return null;
+		}
 	}
 	
 	public int getPieceRow​(int id) throws MPJPException{
@@ -156,7 +180,24 @@ public class PuzzleStructure implements Iterable<Integer>{
 	}
 
 	public Set<Integer> getPossiblePiecesInStandarFor​(Point point){
-		return null;
+		Set<Integer> p = new HashSet<Integer>();
+		
+		int colum = (int) (point.getX()/getPieceWidth());
+		int row = (int) (point.getY()/getPieceHeight());
+		int id = (row * getColumns()) + colum;
+		
+		p.add(id);
+		
+		p.add(getPieceFacing(Direction.NORTH,id));
+		p.add(getPieceFacing(Direction.NORTH,getPieceFacing(Direction.EAST, id)));
+		p.add(getPieceFacing(Direction.NORTH,getPieceFacing(Direction.WEST, id)));
+		p.add(getPieceFacing(Direction.SOUTH,id));
+		p.add(getPieceFacing(Direction.SOUTH,getPieceFacing(Direction.EAST, id)));
+		p.add(getPieceFacing(Direction.SOUTH,getPieceFacing(Direction.WEST, id)));
+		p.add(getPieceFacing(Direction.EAST,id));
+		p.add(getPieceFacing(Direction.WEST,id));
+		p.remove(null);
+		return p;
 	}
 	public Point getRandomPointInStandardPuzzle() {
 		Random r = new Random();

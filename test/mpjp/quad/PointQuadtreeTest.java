@@ -77,22 +77,22 @@ public class PointQuadtreeTest {
 		 
 		 assertThrows(PointOutOfBoundException.class,
 			() ->	 
-			 	quad.insert(new Location("too left and too low", 
+			 	quad.insert​(new Location("too left and too low", 
 					 TOO_SMALL_COORDINATE, TOO_SMALL_COORDINATE)));
 
 		 assertThrows(PointOutOfBoundException.class,
 			() ->	  
-			 quad.insert(new Location("too high", 
+			 quad.insert​(new Location("too high", 
 					 TOO_LARGE_COORDINATE, CENTER_Y)));
 		 
 		 assertThrows(PointOutOfBoundException.class,
 			() ->	  
-			 quad.insert(new Location("too right", 
+			 quad.insert​(new Location("too right", 
 					 CENTER_X, TOO_LARGE_COORDINATE)));
 		 
 		 assertThrows(PointOutOfBoundException.class,
 					() ->	  
-			 quad.insert(new Location("too high and too right", 
+			 quad.insert​(new Location("too high and too right", 
 					 TOO_LARGE_COORDINATE, TOO_LARGE_COORDINATE)));
 	}
 
@@ -101,11 +101,11 @@ public class PointQuadtreeTest {
 	 */
 	@Test
 	public void testBoundariesIn() {
-		 quad.insert(new Location("center", CENTER_X, CENTER_Y));
-		 quad.insert(new Location("top left", TOP_LEFT_X, TOP_LEFT_Y));
-		 quad.insert(new Location("top right", BOTTOM_RIGHT_X, TOP_LEFT_Y));
-		 quad.insert(new Location("bottom right", TOP_LEFT_X, BOTTOM_RIGHT_Y));
-		 quad.insert(new Location("bottom left", BOTTOM_RIGHT_X, BOTTOM_RIGHT_Y));
+		 quad.insert​(new Location("center", CENTER_X, CENTER_Y));
+		 quad.insert​(new Location("top left", TOP_LEFT_X, TOP_LEFT_Y));
+		 quad.insert​(new Location("top right", BOTTOM_RIGHT_X, TOP_LEFT_Y));
+		 quad.insert​(new Location("bottom right", TOP_LEFT_X, BOTTOM_RIGHT_Y));
+		 quad.insert​(new Location("bottom left", BOTTOM_RIGHT_X, BOTTOM_RIGHT_Y));
 	}
 	
 
@@ -116,7 +116,7 @@ public class PointQuadtreeTest {
 	public void testFindAbsent() {
 		quad = makeQuadTreeFor(porto);
 		
-		assertNull(quad.find(porto));
+		assertNull(quad.find​(porto));
 	}
 	
 	/**
@@ -126,9 +126,9 @@ public class PointQuadtreeTest {
 	public void testFindPresent() {
 		quad = makeQuadTreeFor(porto);
 		
-		quad.insert(porto);
+		quad.insert​(porto);
 		
-		assertEquals(porto,quad.find(porto));
+		assertEquals(porto,quad.find​(porto));
 	}
 	
 	
@@ -139,10 +139,10 @@ public class PointQuadtreeTest {
 	public void testDelete() {
 		quad = makeQuadTreeFor(porto);
 		
-		quad.insert(porto);
+		quad.insert​(porto);
 		
-		quad.delete(porto);
-		assertNull(quad.find(porto));
+		quad.delete​(porto);
+		assertNull(quad.find​(porto));
 	}
 	
 	
@@ -154,12 +154,12 @@ public class PointQuadtreeTest {
 		
 		quad = makeQuadTreeFor(porto);
 		
-		quad.insert(porto);
+		quad.insert​(porto);
 
 		assertAll(
 				() -> {
 					Set<Location> near =  
-							quad.findNear(porto.getX(), porto.getY(), SMALL_RADIUS);
+							quad.findNear​(porto.getX(), porto.getY(), SMALL_RADIUS);
 					
 					assertAll(
 							() -> assertEquals(1,near.size()),
@@ -171,10 +171,10 @@ public class PointQuadtreeTest {
 					Location other = new Location(otherName, 
 							porto.latitude, porto.longitude);
 				
-					quad.insertReplace(other);
+					quad.insertReplace​(other);
 		
 					Set<Location> near =  
-							quad.findNear(porto.getX(), porto.getY(), 1);
+							quad.findNear​(porto.getX(), porto.getY(), 1);
 					
 					assertAll(
 							() -> assertEquals(1,near.size()),
@@ -217,10 +217,10 @@ public class PointQuadtreeTest {
 	private void checkAroundCenter(int radius,int expected) {
 		for(int x=CENTER_X-radius; x <= CENTER_X+radius; x++)
 			for(int y=CENTER_Y-radius; y <= CENTER_Y+radius; y++)
-				quad.insert(new Location("",x,y));
+				quad.insert​(new Location("",x,y));
 	
 	
-		assertEquals(expected,quad.findNear(CENTER_X, CENTER_Y, radius).size());
+		assertEquals(expected,quad.findNear​(CENTER_X, CENTER_Y, radius).size());
 	}
 	
 	/**
@@ -276,7 +276,7 @@ public class PointQuadtreeTest {
 							"Matosinhos"} ) 
 						near.add(locations.get(name));
 				
-					assertEquals(near,quad.findNear(
+					assertEquals(near,quad.findNear​(
 							porto.getX(), porto.getY(), 0.1));
 				},
 				() -> {
@@ -285,7 +285,7 @@ public class PointQuadtreeTest {
 							"Valongo" } ) 
 						near.add(locations.get(name));
 		
-					assertEquals(near,quad.findNear(
+					assertEquals(near,quad.findNear​(
 							porto.getX(), porto.getY(), 0.2));
 				},
 				() -> {
@@ -296,7 +296,7 @@ public class PointQuadtreeTest {
 							"Póvoa de Varzim" } ) 
 						near.add(locations.get(name));
 		
-					assertEquals(near,quad.findNear(
+					assertEquals(near,quad.findNear​(
 							porto.getX(), porto.getY(), 0.3));
 				});
 	}
@@ -308,8 +308,7 @@ public class PointQuadtreeTest {
 	@Test
 	public void testPortugueseLocations() {
 		
-		for(String name: new String[] { "Porto", "Lisboa", "Coimbra", "Faro", 
-				"Valença", "Bragança", "Vila Real de Santo António", "Sagres"}) {
+		for(String name: new String[] { "Porto", "Lisboa", "Coimbra", "Faro", "Valença", "Bragança", "Vila Real de Santo António", "Sagres"}) {
 			testLocationsAround(locations.get(name),0.01,5.0);
 		}
 	}
@@ -326,7 +325,7 @@ public class PointQuadtreeTest {
 		
 		addNear(base,near,radius);
 		
-		assertEquals(near,quad.findNear(base.getX(), base.getY(),radius));
+		assertEquals(near,quad.findNear​(base.getX(), base.getY(),radius));
 	}
 	
 	/**
@@ -344,7 +343,7 @@ public class PointQuadtreeTest {
 		
 		for(double radius = step; radius <= limit; radius += step) {
 			addNear(base,near,radius);
-			assertEquals(near,quad.findNear(base.getX(), base.getY(),radius),
+			assertEquals(near,quad.findNear​(base.getX(), base.getY(),radius),
 					"expected at a distance "+radius+" of "+base);
 		}	
 	}
@@ -358,7 +357,7 @@ public class PointQuadtreeTest {
 	void addNear(Location base, HashSet<Location> near,double radius) {
 		
 		for(Location location: locations.values()) {
-			Location inQuad = quad.find(location);
+			Location inQuad = quad.find​(location);
 			
 			if(inQuad == null)
 				throw new RuntimeException("Unused location in quad:"+location);
@@ -445,10 +444,10 @@ public class PointQuadtreeTest {
 	
 		for(String name: locations.keySet()) {
 			Location location = locations.get(name);
-			Location other = quadTree.find(location);		
+			Location other = quadTree.find​(location);		
 			
 			if(other == null) 
-				quadTree.insert(location);
+				quadTree.insert​(location);
 			else if(PRINT_OVERLAPED_LOCATIONS)
 				System.out.println(String.format("%20s : %20s",location.name,other.name));
 

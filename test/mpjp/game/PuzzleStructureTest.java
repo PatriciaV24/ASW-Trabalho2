@@ -243,7 +243,7 @@ class PuzzleStructureTest extends PuzzleData {
 		Point face = new Point(fx,fy);
 		
 		assertEquals(face,	
-				puzzle.getStructure().getPieceCenterFacing(direction, base));
+				puzzle.getStructure().getPieceCenterFacing​(direction, base));
 	}
 
 	/**
@@ -274,9 +274,9 @@ class PuzzleStructureTest extends PuzzleData {
 		
 		if(row == -1)	
 			assertThrows(MPJPException.class, 
-					() -> puzzle.getStructure().getPieceRow(id));
+					() -> puzzle.getStructure().getPieceRow​(id));
 		else
-			assertEquals(row,puzzle.getStructure().getPieceRow(id));			
+			assertEquals(row,puzzle.getStructure().getPieceRow​(id));			
 	}
 
 	/**
@@ -308,9 +308,9 @@ class PuzzleStructureTest extends PuzzleData {
 		
 		if(column == -1)	
 			assertThrows(MPJPException.class, 
-					() -> puzzle.getStructure().getPieceColumn(id));
+					() -> puzzle.getStructure().getPieceColumn​(id));
 		else
-			assertEquals(column,puzzle.getStructure().getPieceColumn(id));
+			assertEquals(column,puzzle.getStructure().getPieceColumn​(id));
 			
 	}
 	
@@ -334,8 +334,8 @@ class PuzzleStructureTest extends PuzzleData {
 		for(int id=0; id < pieceCount; id++) {
 			assertTrue(locations.containsKey(id),"location for id:"+id);
 			
-			int row = structure.getPieceRow(id);
-			int column = structure.getPieceColumn(id);
+			int row = structure.getPieceRow​(id);
+			int column = structure.getPieceColumn​(id);
 			
 			double x = ((double) column + 0.5D) * width;
 			double y = ((double) row    + 0.5D) * height;
@@ -386,9 +386,9 @@ class PuzzleStructureTest extends PuzzleData {
 		PuzzleStructure structure = puzzle.getStructure();
 		if(x <0)
 			assertThrows(MPJPException.class, 
-					() -> structure.getPieceStandardCenter(id));
+					() -> structure.getPieceStandardCenter​(id));
 		else
-			assertEquals(new Point(x,y), structure.getPieceStandardCenter(id));
+			assertEquals(new Point(x,y), structure.getPieceStandardCenter​(id));
 	}
 
 	@ParameterizedTest
@@ -418,7 +418,7 @@ class PuzzleStructureTest extends PuzzleData {
 		for(String id: ids.split(";"))
 			expected.add(Integer.parseInt(id));
 		
-		assertEquals(expected,structure.getPossiblePiecesInStandarFor(point));
+		assertEquals(expected,structure.getPossiblePiecesInStandarFor​(point));
 	}
 
 	
