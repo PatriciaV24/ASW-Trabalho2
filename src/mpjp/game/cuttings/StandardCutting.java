@@ -8,44 +8,43 @@ import mpjp.game.Direction;
 import mpjp.game.PuzzleStructure;
 import mpjp.shared.geom.PieceShape;
 
-public class StandardCutting 
-implements Cutting{
+public class StandardCutting implements Cutting {
 
 	public StandardCutting() {
 		super();
 	}
-	
-	public Map<Integer,PieceShape> getShapes(PuzzleStructure structure){
-		 Map<Integer,PieceShape> map = new HashMap<Integer,PieceShape>();
-		 
-		 return map;
+
+	public Map<Integer, PieceShape> getShapes(PuzzleStructure structure) {
+		Map<Integer, PieceShape> map = new HashMap<Integer, PieceShape>();
+		for (int i = 0; i < structure.getPieceCount(); i++) {
+
+		}
+		return map;
 	}
-	
-	Point getMiddlePoint(int id,Direction direction){
+
+	Point getMiddlePoint(int id, Direction direction) {
 		Point p = new Point();
-		return p;	
+		return p;
 	}
-	
-	
-	Point getStartControlPoint1(int id,Direction direction){
+
+	Point getStartControlPoint1(int id, Direction direction) {
 		Point p = new Point();
-		return p;	
+		return p;
 	}
-	
-	Point getStartControlPoint2(int id,Direction direction){
+
+	Point getStartControlPoint2(int id, Direction direction) {
 		Point p = new Point();
-		return p;	
+		return p;
 	}
-	
-	Point getEndControlPoint1(int id,Direction direction){
+
+	Point getEndControlPoint1(int id, Direction direction) {
 		Point p = new Point();
-		return p;	
+		return p;
 	}
-	
-	Point getEndControlPoint2(int id,Direction direction){
+
+	Point getEndControlPoint2(int id, Direction direction) {
 		Point p = new Point();
-		return p;	
+		return p;
 	}
-	
-	
+
 }
