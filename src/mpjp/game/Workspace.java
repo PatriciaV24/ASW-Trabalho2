@@ -21,6 +21,10 @@ implements Serializable{
 	throws MPJPException{
 		this.info = info;
 	}
+	
+	static double getWidthFactor() {
+		
+	}
 
 	PuzzleLayout connect(int moveId, Point point) {
 		
@@ -35,8 +39,7 @@ implements Serializable{
 	}
 	
 	String getId() {
-		String id = info.getImageName()+start;
-		
+		return info.getImageName()+start;
 	}
 	
 	int getPercentageSolved() {
@@ -63,9 +66,6 @@ implements Serializable{
 		
 	}
 	
-	static double getWidthFactor() {
-		
-	}
 	
 	void restore() {
 		

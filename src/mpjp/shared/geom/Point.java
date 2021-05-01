@@ -3,18 +3,26 @@ package mpjp.shared.geom;
 import java.io.Serializable;
 
 public class Point implements Serializable {
+/**
+* 		public class Point
+*		extends java.lang.Object
+*		implements java.io.Serializable
+*		A pair or integer coordinates in the plane.
+*/
 	private static final long serialVersionUID = -682334289743594825L;
 	double x;
 	double y;
 
 	
 
-	public Point(double x, double y) {
+	public Point(double x, double y){
 		this.x = x;
 		this.y = y;
 	}
 	
-	public Point() {}
+	public Point(){
+		
+	}
 
 	public double getX() {
 		return x;

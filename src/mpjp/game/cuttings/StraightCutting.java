@@ -1,11 +1,13 @@
 package mpjp.game.cuttings;
 
-import java.awt.Point;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import mpjp.game.PuzzleStructure;
+import mpjp.shared.geom.LineTo;
 import mpjp.shared.geom.PieceShape;
+import mpjp.shared.geom.Point;
 
 public class StraightCutting implements Cutting {
 
@@ -19,14 +21,20 @@ public class StraightCutting implements Cutting {
 		double centerPointX = structure.getPieceWidth() / 2;
 		double centerPointY = structure.getPieceHeight() / 2;
 
-		// TODO ver porque e que os pontos nao sao criados
-		Point topRight = new Point(centerPointX, centerPointY);
-		Point TopLeft = new Point(-centerPointX, centerPointY);
+		Point  bottomRight = new Point(centerPointX, centerPointY);
+		Point  topRight= new Point(-centerPointX, centerPointY);
 
-		Point BottomRight = new Point(centerPointX, -centerPointY);
-		Point BottomLeft = new Point(-centerPointX, -centerPointY);
+		Point  bottomLeft = new Point(centerPointX, -centerPointY);
+		Point  topLeft= new Point(-centerPointX, -centerPointY);
 
+		
 		PieceShape piece = new PieceShape();
+		piece.setStartPoint(bottomRight);
+		piece.addSegment(new LineTo(bottomLeft));
+		piece.addSegment(new LineTo(topLeft));
+		piece.addSegment(new LineTo(topRight));
+	
+		
 		// TODO adicionar os pontos ao piece
 
 		for (int i = 0; i < structure.getPieceCount(); i++)
