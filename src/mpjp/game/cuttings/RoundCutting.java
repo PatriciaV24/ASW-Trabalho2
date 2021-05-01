@@ -1,5 +1,21 @@
 package mpjp.game.cuttings;
 
-public class RoundCutting {
+import java.util.HashMap;
+import java.util.Map;
 
+import mpjp.game.PuzzleStructure;
+import mpjp.shared.geom.PieceShape;
+
+public class RoundCutting
+implements Cutting{
+
+	public RoundCutting() {
+		super();
+	}
+	
+	public Map<Integer,PieceShape> getShapes(PuzzleStructure structure){
+		 Map<Integer,PieceShape> map = new HashMap<Integer,PieceShape>();
+		 
+		 return map;
+	}
 }
