@@ -42,7 +42,7 @@ class CuttingFactoryImplementationTest {
 	 */
 	@Test
 	void testGetAvaliableCuttings() {		
-		Set<String> set = factory.getAvaliableCuttings();
+		Set<String> set = factory.getAvailableCuttings();
 				
 		assertNotNull(set,"expected a set of strings");
 		
@@ -57,7 +57,7 @@ class CuttingFactoryImplementationTest {
 	void testCreateCutting() throws MPJPException {
 		assertAll(
 				() -> {
-					for(String name: factory.getAvaliableCuttings()) {
+					for(String name: factory.getAvailableCuttings()) {
 						Cutting cutting = factory.createCutting(name);
 			
 						assertNotNull(cutting,"cutting expected");
