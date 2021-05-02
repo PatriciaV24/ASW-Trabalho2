@@ -30,6 +30,7 @@ public class CuttingFactoryImplementation implements CuttingFactory{
 			case "Triangular":
 				c = new TriangularCutting();
 				break;
+			default: throw new MPJPException();
 		}
 		return c;
 	}
