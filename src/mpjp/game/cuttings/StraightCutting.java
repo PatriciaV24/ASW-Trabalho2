@@ -23,13 +23,18 @@ public class StraightCutting implements Cutting {
 		double x = structure.getPieceWidth() / 2;
 		double y = structure.getPieceHeight() / 2;
 		
+		Point BotRigh = new Point(x,y);
+		Point BotLeft = new Point(-x,y);
+		Point TopRigh = new Point(-x,-y);
+		Point TopLeft = new Point(x,-y);
+		
 		for(int r=0; r<rows; r++) {
 			for(int c=0; c<cols; c++) {
-				PieceShape piece = new PieceShape(new Point(-x,-y)) //Cima Esquerdo
-							.addSegment(new LineTo(new Point(-x,y)))//Baixo Esquerdo
-							.addSegment(new LineTo(new Point(x,y)))  //Baixo Direita
-							.addSegment(new LineTo(new Point(x,-y))) //Cima Direita
-							.addSegment(new LineTo(new Point(-x,-y))); //Inicio
+				PieceShape piece = new PieceShape(BotRigh) //Cima Esquerdo
+							.addSegment(new LineTo(BotLeft))//Baixo Esquerdo
+							.addSegment(new LineTo(TopRigh))  //Baixo Direita
+							.addSegment(new LineTo(TopLeft)) //Cima Direita
+							.addSegment(new LineTo(BotRigh)); //Inicio
 				map.put(r*cols+c, piece);
 			}
 		}

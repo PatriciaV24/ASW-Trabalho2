@@ -23,114 +23,210 @@ implements Cutting{
 		double x = structure.getPieceWidth() / 2;
 		double y = structure.getPieceHeight() / 2;
 
-		PieceShape star = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		Point begin = new Point(x, y);
+		LineTo botRigh = new LineTo(new Point(x, y));
+		LineTo botLeft = new LineTo(new Point(-x, y));
+		LineTo topLeft = new LineTo(new Point(-x, -y)); // Right->Left
+		LineTo topRigh = new LineTo(new Point(x, -y));
 
-		PieceShape starTop = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(x / 2, -y)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		LineTo botIn = new LineTo(new Point(0, y / 2));
+		LineTo leftIn = new LineTo(new Point(-x / 2, 0));
+		LineTo topIn = new LineTo(new Point(0, -y / 2));
+		LineTo rigIn = new LineTo(new Point(x / 2, 0));
 
-		PieceShape starBot = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(x / 2, y)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		LineTo botM = new LineTo(new Point(0, y));
+		LineTo leftM = new LineTo(new Point(-x, 0));
+		LineTo topM = new LineTo(new Point(0, -y));
+		LineTo rigM = new LineTo(new Point(x, 0));
 
-		PieceShape starLeft = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x, y / 2)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		LineTo botOut = new LineTo(new Point(0, y + y / 2));
+		LineTo lefOut = new LineTo(new Point(-x - x / 2, 0));
+		LineTo topOut = new LineTo(new Point(0, -y - y / 2));
+		LineTo rigOut = new LineTo(new Point(x + x / 2, 0));
 
-		PieceShape starRig = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x, y / 2)))
-				.addSegment(new LineTo(new Point(x, y)));
+		/*Peça Estrela c/ várias alternativas*/
+		PieceShape star = new PieceShape(begin)
+				.addSegment(botIn)
+				.addSegment(botLeft)
+				.addSegment(leftIn)
+				.addSegment(topLeft)
+				.addSegment(topIn)
+				.addSegment(topRigh)
+				.addSegment(rigIn)
+				.addSegment(botRigh);
 
-		PieceShape starTopLeft = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x, y / 2)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape starTop = new PieceShape(begin)
+				.addSegment(botIn)
+				.addSegment(botLeft)
+				.addSegment(leftIn)
+				.addSegment(topLeft)
+				.addSegment(topM)
+				.addSegment(topRigh)
+				.addSegment(rigIn)
+				.addSegment(botRigh);
 
-		PieceShape starTopRig = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(x / 2, -y)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x, y / 2)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape starBot = new PieceShape(begin)
+				.addSegment(botM)
+				.addSegment(botLeft)
+				.addSegment(leftIn)
+				.addSegment(topLeft)
+				.addSegment(topIn)
+				.addSegment(topRigh)
+				.addSegment(rigIn)
+				.addSegment(botRigh);
 
-		PieceShape starBotLeft = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(x / 2, y)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x, y / 2)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape starLeft = new PieceShape(begin)
+				.addSegment(botIn)
+				.addSegment(botLeft)
+				.addSegment(leftM)
+				.addSegment(topLeft)
+				.addSegment(topIn)
+				.addSegment(topRigh)
+				.addSegment(rigIn)
+				.addSegment(botRigh);
 
-		PieceShape starBotRig = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(x / 2, y)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x, y / 2)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape starRig = new PieceShape(begin)
+				.addSegment(botIn)
+				.addSegment(botLeft)
+				.addSegment(leftIn)
+				.addSegment(topLeft)
+				.addSegment(topIn)
+				.addSegment(topRigh)
+				.addSegment(rigM)
+				.addSegment(botRigh);
 
-		PieceShape los = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y + y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x - x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y - y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x + x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape starTopLeft = new PieceShape(begin)
+				.addSegment(botIn)
+				.addSegment(botLeft)
+				.addSegment(leftM)
+				.addSegment(topLeft)
+				.addSegment(topM)
+				.addSegment(topRigh)
+				.addSegment(rigIn)
+				.addSegment(botRigh);
 
-		PieceShape losTop = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y + y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x - x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(x / 2, -y)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x + x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape starTopRig = new PieceShape(begin)
+				.addSegment(botIn)
+				.addSegment(botLeft)
+				.addSegment(leftIn)
+				.addSegment(topLeft)
+				.addSegment(topM)
+				.addSegment(topRigh)
+				.addSegment(rigM)
+				.addSegment(botRigh);
 
-		PieceShape losBot = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(x / 2, y)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x - x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y - y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x + x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape starBotLeft = new PieceShape(begin)
+				.addSegment(botM)
+				.addSegment(botLeft)
+				.addSegment(leftM)
+				.addSegment(topLeft)
+				.addSegment(topIn)
+				.addSegment(topRigh)
+				.addSegment(rigIn)
+				.addSegment(botRigh);
 
-		PieceShape losLeft = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y + y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x, y / 2)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y - y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x + x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape starBotRig = new PieceShape(begin)
+				.addSegment(botM)
+				.addSegment(botLeft)
+				.addSegment(leftIn)
+				.addSegment(topLeft)
+				.addSegment(topIn)
+				.addSegment(topRigh)
+				.addSegment(rigM)
+				.addSegment(botRigh);
 
-		PieceShape losRig = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y + y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x - x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y - y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x, y / 2)))
-				.addSegment(new LineTo(new Point(x, y)));
+		/*Peça Losangulo c/ várias alternativas*/
+		PieceShape los = new PieceShape(begin)
+				.addSegment(botOut)
+				.addSegment(botLeft)
+				.addSegment(lefOut)
+				.addSegment(topLeft)
+				.addSegment(topOut)
+				.addSegment(topRigh)
+				.addSegment(rigOut)
+				.addSegment(botRigh);
 
-		PieceShape losTopLeft = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y + y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x, y / 2)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(x / 2, -y)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x + x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape losTop = new PieceShape(begin)
+				.addSegment(botOut)
+				.addSegment(botLeft)
+				.addSegment(lefOut)
+				.addSegment(topLeft)
+				.addSegment(topM)
+				.addSegment(topRigh)
+				.addSegment(rigOut)
+				.addSegment(botRigh);
 
-		PieceShape losTopRig = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(0, y + y / 2)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x - x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(x / 2, -y)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x, y / 2)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape losBot = new PieceShape(begin)
+				.addSegment(botM)
+				.addSegment(botLeft)
+				.addSegment(lefOut)
+				.addSegment(topLeft)
+				.addSegment(topOut)
+				.addSegment(topRigh)
+				.addSegment(rigOut)
+				.addSegment(botRigh);
 
-		PieceShape losBotLeft = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(x / 2, y)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x, y / 2)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y - y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x + x / 2, 0)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape losLeft = new PieceShape(begin)
+				.addSegment(botOut)
+				.addSegment(botLeft)
+				.addSegment(leftM)
+				.addSegment(topLeft)
+				.addSegment(topOut)
+				.addSegment(topRigh)
+				.addSegment(rigOut)
+				.addSegment(botRigh);
 
-		PieceShape losBotRig = new PieceShape(new Point(x, y)).addSegment(new LineTo(new Point(x / 2, y)))
-				.addSegment(new LineTo(new Point(-x, y))).addSegment(new LineTo(new Point(-x - x / 2, 0)))
-				.addSegment(new LineTo(new Point(-x, -y))).addSegment(new LineTo(new Point(0, -y - y / 2)))
-				.addSegment(new LineTo(new Point(x, -y))).addSegment(new LineTo(new Point(x, y / 2)))
-				.addSegment(new LineTo(new Point(x, y)));
+		PieceShape losRig = new PieceShape(begin)
+				.addSegment(botOut)
+				.addSegment(botLeft)
+				.addSegment(lefOut)
+				.addSegment(topLeft)
+				.addSegment(topOut)
+				.addSegment(topRigh)
+				.addSegment(rigM)
+				.addSegment(botRigh);
 
+		/*PieceShape losTopLeft = new PieceShape(begin)
+				.addSegment(botOut)
+				.addSegment(botLeft)
+				.addSegment(leftM)
+				.addSegment(topLeft)
+				.addSegment(topM)
+				.addSegment(topRigh)
+				.addSegment(rigOut)
+				.addSegment(botRigh);
+		*/
+	
+		PieceShape losTopRig = new PieceShape(begin)
+				.addSegment(botOut)
+				.addSegment(botLeft)
+				.addSegment(lefOut)
+				.addSegment(topLeft)
+				.addSegment(topM)
+				.addSegment(topRigh)
+				.addSegment(rigM)
+				.addSegment(botRigh);
+
+		PieceShape losBotLeft = new PieceShape(begin)
+				.addSegment(botM)
+				.addSegment(botLeft)
+				.addSegment(leftM)
+				.addSegment(topLeft)
+				.addSegment(topOut)
+				.addSegment(topRigh)
+				.addSegment(rigOut)
+				.addSegment(botRigh);
+
+		PieceShape losBotRig = new PieceShape(begin)
+				.addSegment(botM)
+				.addSegment(botLeft)
+				.addSegment(lefOut)
+				.addSegment(topLeft)
+				.addSegment(topOut)
+				.addSegment(topRigh)
+				.addSegment(rigM)
+				.addSegment(botRigh);
+		
 		for (int c = 0; c < cols; c++) {
 			for (int r = 0; r < rows; r++) {
 				if (c % 2 == 0) {
@@ -186,54 +282,36 @@ implements Cutting{
 						}
 					}
 				} else {
-					if (c == 0) {
+					if (c == cols - 1) {
 						if (r == 0)
-							map.put(r * cols + c, losTopLeft);
+							map.put(r * cols + c, losTopRig);
 						else {
-							if (r == rows - 1)
+							if (r == rows - 1) {
 								if (r % 2 == 0)
-									map.put(r * cols + c, losBotLeft);
+									map.put(r * cols + c, losBotRig);
 								else
-									map.put(r * cols + c, starBotLeft);
-							else {
+									map.put(r * cols + c, starBotRig);
+							} else {
 								if (r % 2 == 0)
-									map.put(r * cols + c, losLeft);
+									map.put(r * cols + c, losRig);
 								else
-									map.put(r * cols + c, starLeft);
+									map.put(r * cols + c, starRig);
 							}
 						}
 					} else {
-						if (c == cols - 1) {
-							if (r == 0)
-								map.put(r * cols + c, losTopRig);
+						if (r == 0)
+							map.put(r * cols + c, losTop);
+						else {
+							if (r == rows - 1)
+								if (r % 2 == 0)
+									map.put(r * cols + c, losBot);
+								else
+									map.put(r * cols + c, starBot);
 							else {
-								if (r == rows - 1) {
-									if (r % 2 == 0)
-										map.put(r * cols + c, losBotRig);
-									else
-										map.put(r * cols + c, starBotRig);
-								} else {
-									if (r % 2 == 0)
-										map.put(r * cols + c, losRig);
-									else
-										map.put(r * cols + c, starRig);
-								}
-							}
-						} else {
-							if (r == 0)
-								map.put(r * cols + c, losTop);
-							else {
-								if (r == rows - 1)
-									if (r % 2 == 0)
-										map.put(r * cols + c, losBot);
-									else
-										map.put(r * cols + c, starBot);
-								else {
-									if (r % 2 == 0)
-										map.put(r * cols + c, los);
-									else
-										map.put(r * cols + c, star);
-								}
+								if (r % 2 == 0)
+									map.put(r * cols + c, los);
+								else
+									map.put(r * cols + c, star);
 							}
 						}
 					}
