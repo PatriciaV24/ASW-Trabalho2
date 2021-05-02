@@ -54,7 +54,7 @@ public class StandardCutting implements Cutting {
 		//Point botOut = new Point(0, y + y / 2);
 		Point leftOut = new Point(-x - x / 2, 0);
 		Point topOut = new Point(0, -y - y / 2);
-		Point rigOut = new Point(x + x /2, 0);
+		//Point rigOut = new Point(x + x /2, 0);
 		
 		Point leftBotOut = new Point(-x-x/2,y);
 		Point leftTopOut = new Point(-x-x/2,-y);
@@ -164,32 +164,27 @@ public class StandardCutting implements Cutting {
 					else {
 						if (r == rows - 1)
 							map.put(r * cols + c, c1BotLeft);
-							
-						else {
+						else 
 							map.put(r * cols + c, c1Left);
-						}
 					}
 				} else {
 					if (c == cols - 1) {
 						if (r == 0)
 							map.put(r * cols + c, c1TopRig);
 						else {
-							if (r == rows - 1) {
+							if (r == rows - 1) 
 								map.put(r * cols + c, c1BotRig);
-							} else {
+							else
 								map.put(r * cols + c, c1Rig);
-							}
 						}
 					} else {
 						if (r == 0)
 							map.put(r * cols + c, c1Top);
 						else {
 							if (r == rows - 1)
-									map.put(r * cols + c, c1Bot);
-							else {
-									map.put(r * cols + c, c1);
-
-							}
+								map.put(r * cols + c, c1Bot);
+							else 
+								map.put(r * cols + c, c1);
 						}
 					}
 				}
