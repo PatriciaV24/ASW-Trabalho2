@@ -2,7 +2,7 @@ package mpjp.game;
 
 import java.awt.Point;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import mpjp.shared.MPJPException;
 import mpjp.shared.PuzzleInfo;
@@ -15,16 +15,15 @@ implements Serializable{
 	
 	PuzzleInfo info;
 	Date start;
-	
+	static double radius, heightFactor, widthFactor;
 	
 	public Workspace(PuzzleInfo info)
 	throws MPJPException{
 		this.info = info;
+		this.start = new Date();
 	}
 	
-	static double getWidthFactor() {
-		
-	}
+	
 
 	PuzzleLayout connect(int moveId, Point point) {
 		
@@ -34,16 +33,13 @@ implements Serializable{
 		
 	}
 	
-	static double getHeightFactor() {
-		
-	}
 	
 	String getId() {
 		return info.getImageName()+start;
 	}
 	
 	int getPercentageSolved() {
-		
+		info.
 	}
 	
 	PuzzleLayout getPuzzleSelectInfo(){
@@ -58,9 +54,7 @@ implements Serializable{
 		
 	}
 	
-	static double getRadius() {
-		
-	}
+	
 	
 	double getSelectRadius() {
 		
@@ -78,16 +72,41 @@ implements Serializable{
 	Integer selectPiece(Point point) {
 		
 	}
-	
-	static void setHeighFactor(double heighFactor) {
-		
+
+
+
+	public static double getRadius() {
+		return radius;
+	}
+
+
+
+	public static void setRadius(double radius) {
+		Workspace.radius = radius;
+	}
+
+
+
+	public static double getHeightFactor() {
+		return heightFactor;
+	}
+
+
+
+	public static void setHeightFactor(double heightFactor) {
+		Workspace.heightFactor = heightFactor;
+	}
+
+
+
+	public static double getWidthFactor() {
+		return widthFactor;
+	}
+
+
+
+	public static void setWidthFactor(double widthFactor) {
+		Workspace.widthFactor = widthFactor;
 	}
 	
-	static void setRadius(double radius) {
-		
-	}
-	
-	static void setWidthFactor(double widthFactor) {
-		
-	}
 }
