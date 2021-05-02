@@ -130,7 +130,7 @@ public class GameApp extends Frame {
 		MenuBar bar = new MenuBar();
 		
 		bar.add(new MyRadioMenu("Image",images,0));
-		bar.add(new MyRadioMenu("Cutting",factory.getAvaliableCuttings(),2));
+		bar.add(new MyRadioMenu("Cutting",factory.getAvailableCuttings(),2));
 		bar.add(new MyRadioMenu("Structure",strutures,0));
 		bar.add(new MyRadioMenu("Dimension",dimensions,0));
 		
