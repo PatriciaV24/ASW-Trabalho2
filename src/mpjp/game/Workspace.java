@@ -22,6 +22,35 @@ import mpjp.shared.PuzzleView;
 import mpjp.shared.geom.PieceShape;
 import mpjp.shared.geom.Point;
 
+/**
+ * An instance of Workspace is where puzzles are solved. It defines a
+ * rectangular area that is large enough to have all puzzles pieces scattered at
+ * the beginning without overlapping each other.
+ * 
+ * The ratio between the workspace and puzzle dimensions is controlled by the
+ * static properties widthFactor and heightFactor. These properties can be
+ * managed with the corresponding static getters and setters. There is also
+ * static property radius that controls how close to pieces must be to their
+ * expected relative positions in order to connect.
+ * 
+ * The constructor of this class receives a PuzzleInfo. Puzzle visualization
+ * data can be obtained with getPuzzleView(). This method is expected to be
+ * called only since it does not include piece locations.
+ * 
+ * The current location of all pieces, including their connections in blocks, is
+ * obtained with getCurrentLayout(). The piece in a given location is retrieved
+ * with selectPiece(Point). When a piece is moved, it can connect to others;
+ * this can me tested with connect(int, Point), returning an updated
+ * PuzzleLayout.
+ * 
+ * To handle larger puzzles, pieces are indexed by their position using a
+ * PointQuadtree. This last class is not serializable, although Workspace is.
+ * Fields referencing non serializable types, such as PointQuadtree, should be
+ * transient and their values restored after desserialization by restore().
+ * 
+ * @author Manuel Sá up201805273
+ * @author Patricia Vieira up201805238
+ */
 public class Workspace implements Serializable {
 	private static final long serialVersionUID = 5367870857776116546L;
 
@@ -45,19 +74,20 @@ public class Workspace implements Serializable {
 		radius = Math.min(struct.getHeight() / 2, struct.getWidth() / 2);
 		this.pieceWidth = info.getWidth() / info.getColumns();
 		this.pieceHeight = info.getHeight() / info.getRows();
-		
+
 		scatter();
 		CuttingFactoryImplementation cuttingImplement = new CuttingFactoryImplementation();
 		Cutting cuts = cuttingImplement.createCutting(info.getCuttingName());
-		
+
 		shapes = cuts.getShapes(getPuzzleStructure());
 		quadTree = new PointQuadtree<PieceStatus>(info.getWidth() * widthFactor, info.getHeight() * heightFactor);
-		
-		for (PieceStatus p : pieces.values()) quadTree.insert​(p);
+
+		for (PieceStatus p : pieces.values())
+			quadTree.insert​(p);
 	}
-
+	
+	/**Move the piece with given id to given point and check if it connects with other pieces.*/
 	PuzzleLayout connect(int moveId, Point point) throws MPJPException {
-
 		if (point.getX() < 0 || point.getX() > struct.getWidth() * Workspace.widthFactor || point.getY() < 0
 				|| point.getY() > struct.getHeight() * Workspace.heightFactor)
 			throw new MPJPException("input position out of bounds");
@@ -66,7 +96,7 @@ public class Workspace implements Serializable {
 
 		Point movedPoint = new Point(point.getX() - pieces.get(moveId).getX(),
 				point.getY() - pieces.get(moveId).getY());
-		
+
 		int blockMoved = pieces.get(moveId).getBlock();
 		LinkedList<PieceStatus> pieceList = new LinkedList<PieceStatus>();
 
@@ -93,11 +123,12 @@ public class Workspace implements Serializable {
 					continue;
 
 				Point nearestPoint = struct.getPieceCenterFacing​(dir, firstPiece.getPosition());
-				Set<PieceStatus> nearestPieces = this.quadTree.findNear​(nearestPoint.getX(), nearestPoint.getY(),radius);
+				Set<PieceStatus> nearestPieces = this.quadTree.findNear​(nearestPoint.getX(), nearestPoint.getY(),
+						radius);
 
 				if (nearestPieces.size() != 0) {
 					for (PieceStatus piece : nearestPieces) {
-						if(piece.getId()==nearId && piece.getBlock() != blockMoved) {
+						if (piece.getId() == nearId && piece.getBlock() != blockMoved) {
 							pieceList.add(piece);
 							piece.setPosition(nearestPoint);
 							piece.setBlock(blockMoved);
@@ -106,9 +137,10 @@ public class Workspace implements Serializable {
 				}
 			}
 		}
-			return getCurrentLayout();
+		return getCurrentLayout();
 	}
 
+	/**The current piece positions and blocks formed by connected pieces*/
 	PuzzleLayout getCurrentLayout() {
 		Map<Integer, List<Integer>> blocks = new HashMap<Integer, List<Integer>>();
 		for (PieceStatus p : pieces.values()) {
@@ -150,7 +182,7 @@ public class Workspace implements Serializable {
 		Map<Integer, Point> locations = new HashMap<Integer, Point>();
 		for (Integer p : pieces.keySet()) {
 			try {
-			locations.put(p, struct.getPieceStandardCenter​(p));
+				locations.put(p, struct.getPieceStandardCenter​(p));
 			} catch (MPJPException error) {
 				error.printStackTrace();
 			}
@@ -165,19 +197,17 @@ public class Workspace implements Serializable {
 	}
 
 	double getSelectRadius() {
-
 		return Math.max(pieceHeight, pieceWidth);
 	}
-
+	/**Restore transient fields that are not saved by serialization.*/
 	void restore() {
 		struct = new PuzzleStructure(this.info);
-		quadTree = new PointQuadtree<PieceStatus>(info.getWidth()*widthFactor, info.getHeight()*heightFactor);
-		for(Entry<Integer,PieceStatus> n: this.pieces.entrySet()) {
+		quadTree = new PointQuadtree<PieceStatus>(info.getWidth() * widthFactor, info.getHeight() * heightFactor);
+		for (Entry<Integer, PieceStatus> n : this.pieces.entrySet()) {
 			quadTree.insert​(n.getValue());
 		}
 	}
-
-
+	/**Scatter the puzzle's pieces on the board before solving it.*/
 	void scatter() {
 		pieces = new HashMap<Integer, PieceStatus>();
 		Map<Integer, Point> locations = getLocations();

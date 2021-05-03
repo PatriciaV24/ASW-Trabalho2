@@ -4,6 +4,11 @@ import java.util.Set;
 
 import mpjp.shared.HasPoint;
 
+/**
+ * Abstract class common to all classes implementing the trie structure. Defines methods required by those classes and provides general methods for checking overlaps and computing distances. This class corresponds to the Component in the Composite design pattern.
+ * @author Manuel Sá up201805273
+ * @author Patricia Vieira up201805238
+ */
 public abstract class Trie<T extends HasPoint> implements Element<T> {
 	
 	protected double bottomRightX;
@@ -15,7 +20,7 @@ public abstract class Trie<T extends HasPoint> implements Element<T> {
 	public enum Quadrant{
 		NE,NW,SE,SW;
 	}
-
+	/** Constructor */
 	protected Trie(double topLeftX, double topLeftY, double bottomRightX, double bottomRightY) {
 		this.bottomRightX = bottomRightX;
 		this.bottomRightY = bottomRightY;

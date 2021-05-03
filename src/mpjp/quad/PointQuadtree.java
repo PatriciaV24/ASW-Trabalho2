@@ -5,16 +5,26 @@ import java.util.Set;
 
 import mpjp.shared.HasPoint;
 
+/**
+ * This class follows the Facade design pattern and presents a presents a single
+ * access point to manage quad trees. It provides methods for inserting,
+ * deleting and finding elements implementing HasPoint. This class corresponds
+ * to the Client in the Composite design pattern used in this package.
+ * 
+ * @author Manuel Sá up201805273
+ * @author Patricia Vieira up201805238
+ */
 public class PointQuadtree<T extends HasPoint> implements Iterable<T> {
 	Trie<T> top;
-	
+	/** Constructor-Create a quad tree for a rectangle with given width and height. */
 	public PointQuadtree(double width,double height) {
 		this(0, height, width,0);
 	}
+	/** Create a quad tree for a rectangle with given dimensions and a margin.*/
 	public PointQuadtree(double width,	double height,double margin) {
 		this(-margin, height+margin, width+margin,-margin);
 	}
-	
+	/** Constructor-Create a quad tree for points in a rectangle with given top left and bottom right corners.*/
 	public PointQuadtree(double topLeftX, double topLeftY, double bottomRightX,	double bottomRightY) {
 		this.top=new LeafTrie<T>(topLeftX,topLeftY,bottomRightX,bottomRightY);	
 	}
@@ -124,7 +134,6 @@ public class PointQuadtree<T extends HasPoint> implements Iterable<T> {
 			}catch (InterruptedException cause){
 				throw new RuntimeException("Unexpected interruption while waiting", cause);
 			}
-			
 		}
 
 		@Override

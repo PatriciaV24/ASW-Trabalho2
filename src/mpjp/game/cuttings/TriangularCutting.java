@@ -8,13 +8,20 @@ import mpjp.shared.geom.LineTo;
 import mpjp.shared.geom.PieceShape;
 import mpjp.shared.geom.Point;
 
-public class TriangularCutting
-implements Cutting{
+/**
+ * This is a simple cutting where each side of a piece has a triangular peg or
+ * hole. The "base" of this triangle is the side of the piece rectangle and its
+ * "height" is at the middle of the base.
+ * 
+ * @author Manuel Sá up201805273
+ * @author Patricia Vieira up201805238
+ */
+public class TriangularCutting implements Cutting {
 
+	/** Constructor-An empty instance */
 	public TriangularCutting() {
-		
 	}
-	
+
 	public Map<Integer, PieceShape> getShapes(PuzzleStructure structure) {
 		Map<Integer, PieceShape> map = new HashMap<Integer, PieceShape>(); // ID e PEÇA
 
@@ -44,189 +51,66 @@ implements Cutting{
 		LineTo topOut = new LineTo(new Point(0, -y - y / 2));
 		LineTo rigOut = new LineTo(new Point(x + x / 2, 0));
 
-		/*Peça Estrela c/ várias alternativas*/
-		PieceShape star = new PieceShape(begin)
-				.addSegment(botIn)
-				.addSegment(botLeft)
-				.addSegment(leftIn)
-				.addSegment(topLeft)
-				.addSegment(topIn)
-				.addSegment(topRigh)
-				.addSegment(rigIn)
-				.addSegment(botRigh);
+		PieceShape star = new PieceShape(begin).addSegment(botIn).addSegment(botLeft).addSegment(leftIn)
+				.addSegment(topLeft).addSegment(topIn).addSegment(topRigh).addSegment(rigIn).addSegment(botRigh);
 
-		PieceShape starTop = new PieceShape(begin)
-				.addSegment(botIn)
-				.addSegment(botLeft)
-				.addSegment(leftIn)
-				.addSegment(topLeft)
-				.addSegment(topM)
-				.addSegment(topRigh)
-				.addSegment(rigIn)
-				.addSegment(botRigh);
+		PieceShape starTop = new PieceShape(begin).addSegment(botIn).addSegment(botLeft).addSegment(leftIn)
+				.addSegment(topLeft).addSegment(topM).addSegment(topRigh).addSegment(rigIn).addSegment(botRigh);
 
-		PieceShape starBot = new PieceShape(begin)
-				.addSegment(botM)
-				.addSegment(botLeft)
-				.addSegment(leftIn)
-				.addSegment(topLeft)
-				.addSegment(topIn)
-				.addSegment(topRigh)
-				.addSegment(rigIn)
-				.addSegment(botRigh);
+		PieceShape starBot = new PieceShape(begin).addSegment(botM).addSegment(botLeft).addSegment(leftIn)
+				.addSegment(topLeft).addSegment(topIn).addSegment(topRigh).addSegment(rigIn).addSegment(botRigh);
 
-		PieceShape starLeft = new PieceShape(begin)
-				.addSegment(botIn)
-				.addSegment(botLeft)
-				.addSegment(leftM)
-				.addSegment(topLeft)
-				.addSegment(topIn)
-				.addSegment(topRigh)
-				.addSegment(rigIn)
-				.addSegment(botRigh);
+		PieceShape starLeft = new PieceShape(begin).addSegment(botIn).addSegment(botLeft).addSegment(leftM)
+				.addSegment(topLeft).addSegment(topIn).addSegment(topRigh).addSegment(rigIn).addSegment(botRigh);
 
-		PieceShape starRig = new PieceShape(begin)
-				.addSegment(botIn)
-				.addSegment(botLeft)
-				.addSegment(leftIn)
-				.addSegment(topLeft)
-				.addSegment(topIn)
-				.addSegment(topRigh)
-				.addSegment(rigM)
-				.addSegment(botRigh);
+		PieceShape starRig = new PieceShape(begin).addSegment(botIn).addSegment(botLeft).addSegment(leftIn)
+				.addSegment(topLeft).addSegment(topIn).addSegment(topRigh).addSegment(rigM).addSegment(botRigh);
 
-		PieceShape starTopLeft = new PieceShape(begin)
-				.addSegment(botIn)
-				.addSegment(botLeft)
-				.addSegment(leftM)
-				.addSegment(topLeft)
-				.addSegment(topM)
-				.addSegment(topRigh)
-				.addSegment(rigIn)
-				.addSegment(botRigh);
+		PieceShape starTopLeft = new PieceShape(begin).addSegment(botIn).addSegment(botLeft).addSegment(leftM)
+				.addSegment(topLeft).addSegment(topM).addSegment(topRigh).addSegment(rigIn).addSegment(botRigh);
 
-		PieceShape starTopRig = new PieceShape(begin)
-				.addSegment(botIn)
-				.addSegment(botLeft)
-				.addSegment(leftIn)
-				.addSegment(topLeft)
-				.addSegment(topM)
-				.addSegment(topRigh)
-				.addSegment(rigM)
-				.addSegment(botRigh);
+		PieceShape starTopRig = new PieceShape(begin).addSegment(botIn).addSegment(botLeft).addSegment(leftIn)
+				.addSegment(topLeft).addSegment(topM).addSegment(topRigh).addSegment(rigM).addSegment(botRigh);
 
-		PieceShape starBotLeft = new PieceShape(begin)
-				.addSegment(botM)
-				.addSegment(botLeft)
-				.addSegment(leftM)
-				.addSegment(topLeft)
-				.addSegment(topIn)
-				.addSegment(topRigh)
-				.addSegment(rigIn)
-				.addSegment(botRigh);
+		PieceShape starBotLeft = new PieceShape(begin).addSegment(botM).addSegment(botLeft).addSegment(leftM)
+				.addSegment(topLeft).addSegment(topIn).addSegment(topRigh).addSegment(rigIn).addSegment(botRigh);
 
-		PieceShape starBotRig = new PieceShape(begin)
-				.addSegment(botM)
-				.addSegment(botLeft)
-				.addSegment(leftIn)
-				.addSegment(topLeft)
-				.addSegment(topIn)
-				.addSegment(topRigh)
-				.addSegment(rigM)
-				.addSegment(botRigh);
+		PieceShape starBotRig = new PieceShape(begin).addSegment(botM).addSegment(botLeft).addSegment(leftIn)
+				.addSegment(topLeft).addSegment(topIn).addSegment(topRigh).addSegment(rigM).addSegment(botRigh);
 
-		/*Peça Losangulo c/ várias alternativas*/
-		PieceShape los = new PieceShape(begin)
-				.addSegment(botOut)
-				.addSegment(botLeft)
-				.addSegment(lefOut)
-				.addSegment(topLeft)
-				.addSegment(topOut)
-				.addSegment(topRigh)
-				.addSegment(rigOut)
-				.addSegment(botRigh);
 
-		PieceShape losTop = new PieceShape(begin)
-				.addSegment(botOut)
-				.addSegment(botLeft)
-				.addSegment(lefOut)
-				.addSegment(topLeft)
-				.addSegment(topM)
-				.addSegment(topRigh)
-				.addSegment(rigOut)
-				.addSegment(botRigh);
-
-		PieceShape losBot = new PieceShape(begin)
-				.addSegment(botM)
-				.addSegment(botLeft)
-				.addSegment(lefOut)
-				.addSegment(topLeft)
-				.addSegment(topOut)
-				.addSegment(topRigh)
-				.addSegment(rigOut)
-				.addSegment(botRigh);
-
-		PieceShape losLeft = new PieceShape(begin)
-				.addSegment(botOut)
-				.addSegment(botLeft)
-				.addSegment(leftM)
-				.addSegment(topLeft)
-				.addSegment(topOut)
-				.addSegment(topRigh)
-				.addSegment(rigOut)
-				.addSegment(botRigh);
-
-		PieceShape losRig = new PieceShape(begin)
-				.addSegment(botOut)
-				.addSegment(botLeft)
-				.addSegment(lefOut)
-				.addSegment(topLeft)
-				.addSegment(topOut)
-				.addSegment(topRigh)
-				.addSegment(rigM)
-				.addSegment(botRigh);
-
-		/*PieceShape losTopLeft = new PieceShape(begin)
-				.addSegment(botOut)
-				.addSegment(botLeft)
-				.addSegment(leftM)
-				.addSegment(topLeft)
-				.addSegment(topM)
-				.addSegment(topRigh)
-				.addSegment(rigOut)
-				.addSegment(botRigh);
-		*/
-	
-		PieceShape losTopRig = new PieceShape(begin)
-				.addSegment(botOut)
-				.addSegment(botLeft)
-				.addSegment(lefOut)
-				.addSegment(topLeft)
-				.addSegment(topM)
-				.addSegment(topRigh)
-				.addSegment(rigM)
-				.addSegment(botRigh);
-
-		PieceShape losBotLeft = new PieceShape(begin)
-				.addSegment(botM)
-				.addSegment(botLeft)
-				.addSegment(leftM)
-				.addSegment(topLeft)
-				.addSegment(topOut)
-				.addSegment(topRigh)
-				.addSegment(rigOut)
-				.addSegment(botRigh);
-
-		PieceShape losBotRig = new PieceShape(begin)
-				.addSegment(botM)
-				.addSegment(botLeft)
-				.addSegment(lefOut)
-				.addSegment(topLeft)
-				.addSegment(topOut)
-				.addSegment(topRigh)
-				.addSegment(rigM)
-				.addSegment(botRigh);
 		
+		PieceShape los = new PieceShape(begin).addSegment(botOut).addSegment(botLeft).addSegment(lefOut)
+				.addSegment(topLeft).addSegment(topOut).addSegment(topRigh).addSegment(rigOut).addSegment(botRigh);
+
+		PieceShape losTop = new PieceShape(begin).addSegment(botOut).addSegment(botLeft).addSegment(lefOut)
+				.addSegment(topLeft).addSegment(topM).addSegment(topRigh).addSegment(rigOut).addSegment(botRigh);
+
+		PieceShape losBot = new PieceShape(begin).addSegment(botM).addSegment(botLeft).addSegment(lefOut)
+				.addSegment(topLeft).addSegment(topOut).addSegment(topRigh).addSegment(rigOut).addSegment(botRigh);
+
+		PieceShape losLeft = new PieceShape(begin).addSegment(botOut).addSegment(botLeft).addSegment(leftM)
+				.addSegment(topLeft).addSegment(topOut).addSegment(topRigh).addSegment(rigOut).addSegment(botRigh);
+
+		PieceShape losRig = new PieceShape(begin).addSegment(botOut).addSegment(botLeft).addSegment(lefOut)
+				.addSegment(topLeft).addSegment(topOut).addSegment(topRigh).addSegment(rigM).addSegment(botRigh);
+
+		/*
+		 * PieceShape losTopLeft = new PieceShape(begin) .addSegment(botOut)
+		 * .addSegment(botLeft) .addSegment(leftM) .addSegment(topLeft)
+		 * .addSegment(topM) .addSegment(topRigh) .addSegment(rigOut)
+		 * .addSegment(botRigh);
+		 */
+
+		PieceShape losTopRig = new PieceShape(begin).addSegment(botOut).addSegment(botLeft).addSegment(lefOut)
+				.addSegment(topLeft).addSegment(topM).addSegment(topRigh).addSegment(rigM).addSegment(botRigh);
+
+		PieceShape losBotLeft = new PieceShape(begin).addSegment(botM).addSegment(botLeft).addSegment(leftM)
+				.addSegment(topLeft).addSegment(topOut).addSegment(topRigh).addSegment(rigOut).addSegment(botRigh);
+
+		PieceShape losBotRig = new PieceShape(begin).addSegment(botM).addSegment(botLeft).addSegment(lefOut)
+				.addSegment(topLeft).addSegment(topOut).addSegment(topRigh).addSegment(rigM).addSegment(botRigh);
+
 		for (int c = 0; c < cols; c++) {
 			for (int r = 0; r < rows; r++) {
 				if (c % 2 == 0) {

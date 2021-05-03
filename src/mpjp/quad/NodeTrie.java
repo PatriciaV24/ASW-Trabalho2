@@ -7,22 +7,32 @@ import java.util.Set;
 
 import mpjp.shared.HasPoint;
 
+/**
+ * Trie with 4 sub tries with equal dimensions covering all its area. This class
+ * corresponds to the Container in the Composite design pattern.
+ * 
+ * @author Manuel Sá up201805273
+ * @author Patricia Vieira up201805238
+ */
 public class NodeTrie<T extends HasPoint> extends Trie<T> {
 	Map<Quadrant, Trie<T>> tries;
 
 	final private double centerx = (this.bottomRightX + this.topLeftX) / 2;
 	final private double centery = (this.bottomRightY + this.topLeftY) / 2;
 	
+	/** Constructor*/
 	public NodeTrie(double topLeftX, double topLeftY, double bottomRightX, double bottomRightY) {
 		super(topLeftX, topLeftY, bottomRightX, bottomRightY);
 		this.tries = new HashMap<Trie.Quadrant, Trie<T>>();
 	}
 
+	/**Accept a visitor to operate on a node of the composite structure*/
 	@Override
 	public void accept(Visitor<T> visitor) {
 		visitor.visit(this);
 	}
-
+	
+	/**Collect all points in this node and its descendants in given set*/
 	@Override
 	void collectAll(Set<T> points) {
 		for (Quadrant q : tries.keySet()) {
@@ -31,6 +41,7 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 		}
 	}
 
+	/**Collect points at a distance smaller or equal to radius from (x,y) and place them in given list*/
 	@Override
 	void collectNear(double x, double y, double radius, Set<T> nodes) {
 		if (overlaps(x, y, radius)) {
@@ -47,7 +58,7 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 		if(trie!=null)
 			trie.delete(point);
 	}
-
+	/**Find a recorded point with the same coordinates of given point*/
 	@Override
 	T find(T point) {
 		Trie<T> trie = tries.get(quadrantOf(point));
@@ -56,6 +67,7 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 		return null;
 	}
 
+	/** A collection of tries that descend from this one */
 	Collection<Trie<T>> getTries() {
 		return tries.values();
 	}
@@ -71,6 +83,7 @@ public class NodeTrie<T extends HasPoint> extends Trie<T> {
 		return this;
 	}
 
+	/**Insert given point, replacing existing points in same location*/
 	@Override
 	Trie<T> insertReplace(T point) {
 		Quadrant q = quadrantOf(point);

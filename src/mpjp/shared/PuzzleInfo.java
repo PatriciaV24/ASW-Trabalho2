@@ -2,6 +2,15 @@ package mpjp.shared;
 
 import java.io.Serializable;
 
+/**
+ * Information required to create a jigsaw puzzle. This class groups data that
+ * needs to be redirected to different methods and classes, following a design
+ * pattern known as Collecting Parameter.
+ * 
+ * @author Manuel Sá up201805273
+ * @author Patricia Vieira up201805238
+ *
+ */
 public class PuzzleInfo implements Serializable {
 	private static final long serialVersionUID = 6472018774762213505L;
 	int columns;
@@ -11,8 +20,8 @@ public class PuzzleInfo implements Serializable {
 	int rows;
 	double width;
 
-	public PuzzleInfo() {}
-
+	public PuzzleInfo() {
+	}
 
 	public PuzzleInfo(String imageName, String cuttingName, int rows, int columns, double width, double height) {
 		this.columns = columns;
@@ -70,5 +79,4 @@ public class PuzzleInfo implements Serializable {
 	public void setWidth(double width) {
 		this.width = width;
 	}
-
 }

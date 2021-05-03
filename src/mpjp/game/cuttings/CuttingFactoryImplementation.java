@@ -5,8 +5,15 @@ import java.util.Set;
 
 import mpjp.shared.MPJPException;
 
-public class CuttingFactoryImplementation implements CuttingFactory{
-	
+/**
+ * A concrete creator implementing a CuttingFactory. This class is part of
+ * Factory Method design pattern.
+ * 
+ * @author Manuel Sá up201805273
+ * @author Patricia Vieira up201805238
+ */
+public class CuttingFactoryImplementation implements CuttingFactory {
+
 	public CuttingFactoryImplementation() {
 		super();
 	}
@@ -15,22 +22,23 @@ public class CuttingFactoryImplementation implements CuttingFactory{
 	public Cutting createCutting(String name) throws MPJPException {
 		Cutting c = null;
 		switch (name) {
-			case "Round":	
-				c = new RoundCutting();
-				break;
-				
-			case "Standard":
-				c = new StandardCutting();
-				break;
-				
-			case "Straight":
-				c = new StraightCutting();
-				break;
-				
-			case "Triangular":
-				c = new TriangularCutting();
-				break;
-			default: throw new MPJPException();
+		case "Round":
+			c = new RoundCutting();
+			break;
+
+		case "Standard":
+			c = new StandardCutting();
+			break;
+
+		case "Straight":
+			c = new StraightCutting();
+			break;
+
+		case "Triangular":
+			c = new TriangularCutting();
+			break;
+		default:
+			throw new MPJPException();
 		}
 		return c;
 	}
@@ -44,5 +52,5 @@ public class CuttingFactoryImplementation implements CuttingFactory{
 		cuts.add("Triangular");
 		return cuts;
 	}
-	
+
 }

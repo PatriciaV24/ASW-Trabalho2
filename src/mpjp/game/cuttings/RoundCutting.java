@@ -8,13 +8,25 @@ import mpjp.shared.geom.Point;
 import mpjp.shared.geom.PieceShape;
 import mpjp.shared.geom.QuadTo;
 
-public class RoundCutting
-implements Cutting{
-
+/**
+ * This is a simple cutting where each side of a piece is a quadratic curve
+ * segment.
+ * 
+ * @author Manuel Sá up201805273
+ * @author Patricia Vieira up201805238
+ */
+public class RoundCutting implements Cutting {
+	/** Constructor-An empty instance */
 	public RoundCutting() {
 		super();
 	}
-	
+
+	/**
+	 * Constructor-An empty instance
+	 * 
+	 * @param PuzzleStructure structure
+	 */
+
 	public Map<Integer, PieceShape> getShapes(PuzzleStructure structure) {
 		Map<Integer, PieceShape> map = new HashMap<Integer, PieceShape>();
 
@@ -23,7 +35,6 @@ implements Cutting{
 		double x = structure.getPieceWidth() / 2;
 		double y = structure.getPieceHeight() / 2;
 
-		/* Todos os pontos utilizados */
 		Point begin = new Point(x, y);
 		Point botRigh = new Point(x, y);
 		Point botLeft = new Point(-x, y);
@@ -43,7 +54,7 @@ implements Cutting{
 		Point botOut = new Point(0, y + y / 2);
 		Point lefOut = new Point(-x - x / 2, 0);
 		Point topOut = new Point(0, -y - y / 2);
-		Point rigOut = new Point(x + x /2, 0);
+		Point rigOut = new Point(x + x / 2, 0);
 
 		QuadTo circBotOut = new QuadTo(botOut, botLeft);
 		QuadTo circBotIn = new QuadTo(botIn, botLeft);
@@ -58,121 +69,63 @@ implements Cutting{
 		QuadTo circRighIn = new QuadTo(rigIn, botRigh);
 		QuadTo circRighMiddle = new QuadTo(rigM, botRigh);
 
-		
-		/*Peça Circulo nº1 c/ várias alternativas*/
-		PieceShape cir1 = new PieceShape(begin)
-				.addSegment(circBotOut)
-				.addSegment(circLeftOut)
-				.addSegment(circTopOut)
+		PieceShape cir1 = new PieceShape(begin).addSegment(circBotOut).addSegment(circLeftOut).addSegment(circTopOut)
 				.addSegment(circRighOut);
 
-		PieceShape cir1Top = new PieceShape(begin)
-				.addSegment(circBotOut)
-				.addSegment(circLeftOut)
-				.addSegment(circTopMiddle)
-				.addSegment(circRighOut);
+		PieceShape cir1Top = new PieceShape(begin).addSegment(circBotOut).addSegment(circLeftOut)
+				.addSegment(circTopMiddle).addSegment(circRighOut);
 
-		/*PieceShape cir1TopLeft = new PieceShape(begin)
-				.addSegment(circBotOut)
-				.addSegment(circLeftMiddle)
-				.addSegment(circTopMiddle)
-				.addSegment(circRighOut);*/
+		/*
+		 * PieceShape cir1TopLeft = new PieceShape(begin) .addSegment(circBotOut)
+		 * .addSegment(circLeftMiddle) .addSegment(circTopMiddle)
+		 * .addSegment(circRighOut);
+		 */
 
-		PieceShape cir1TopRig = new PieceShape(begin)
-				.addSegment(circBotOut)
-				.addSegment(circLeftOut)
-				.addSegment(circTopMiddle)
+		PieceShape cir1TopRig = new PieceShape(begin).addSegment(circBotOut).addSegment(circLeftOut)
+				.addSegment(circTopMiddle).addSegment(circRighMiddle);
+
+		PieceShape cir1Bot = new PieceShape(begin).addSegment(circBotMiddle).addSegment(circLeftOut)
+				.addSegment(circTopOut).addSegment(circRighOut);
+
+		PieceShape cir1BotLeft = new PieceShape(begin).addSegment(circBotMiddle).addSegment(circLeftMiddle)
+				.addSegment(circTopOut).addSegment(circRighOut);
+
+		PieceShape cir1BotRig = new PieceShape(begin).addSegment(circBotMiddle).addSegment(circLeftOut)
+				.addSegment(circTopOut).addSegment(circRighMiddle);
+
+		PieceShape cir1Left = new PieceShape(begin).addSegment(circBotOut).addSegment(circLeftMiddle)
+				.addSegment(circTopOut).addSegment(circRighOut);
+
+		PieceShape cir1Rig = new PieceShape(begin).addSegment(circBotOut).addSegment(circLeftOut).addSegment(circTopOut)
 				.addSegment(circRighMiddle);
 
-		PieceShape cir1Bot = new PieceShape(begin)
-				.addSegment(circBotMiddle)
-				.addSegment(circLeftOut)
-				.addSegment(circTopOut)
-				.addSegment(circRighOut);
+		PieceShape cir2 = new PieceShape(begin).addSegment(circBotIn).addSegment(circLeftIn).addSegment(circTopIn)
+				.addSegment(circRighIn);
 
-		PieceShape cir1BotLeft = new PieceShape(begin)
-				.addSegment(circBotMiddle)
-				.addSegment(circLeftMiddle)
-				.addSegment(circTopOut)
-				.addSegment(circRighOut);
+		PieceShape cir2Top = new PieceShape(begin).addSegment(circBotIn).addSegment(circLeftIn)
+				.addSegment(circTopMiddle).addSegment(circRighIn);
 
-		PieceShape cir1BotRig = new PieceShape(begin)
-				.addSegment(circBotMiddle)
-				.addSegment(circLeftOut)
-				.addSegment(circTopOut)
+		PieceShape cir2TopLeft = new PieceShape(begin).addSegment(circBotIn).addSegment(circLeftMiddle)
+				.addSegment(circTopMiddle).addSegment(circRighIn);
+
+		PieceShape cir2TopRig = new PieceShape(begin).addSegment(circBotIn).addSegment(circLeftIn)
+				.addSegment(circTopMiddle).addSegment(circRighMiddle);
+
+		PieceShape cir2Bot = new PieceShape(begin).addSegment(circBotMiddle).addSegment(circLeftIn)
+				.addSegment(circTopIn).addSegment(circRighIn);
+
+		PieceShape cir2BotLeft = new PieceShape(begin).addSegment(circBotMiddle).addSegment(circLeftMiddle)
+				.addSegment(circTopIn).addSegment(circRighIn);
+
+		PieceShape cir2BotRig = new PieceShape(begin).addSegment(circBotMiddle).addSegment(circLeftIn)
+				.addSegment(circTopIn).addSegment(circRighMiddle);
+
+		PieceShape cir2Left = new PieceShape(begin).addSegment(circBotIn).addSegment(circLeftMiddle)
+				.addSegment(circTopIn).addSegment(circRighIn);
+
+		PieceShape cir2Rig = new PieceShape(begin).addSegment(circBotIn).addSegment(circLeftIn).addSegment(circTopIn)
 				.addSegment(circRighMiddle);
 
-		PieceShape cir1Left = new PieceShape(begin)
-				.addSegment(circBotOut)
-				.addSegment(circLeftMiddle)
-				.addSegment(circTopOut)
-				.addSegment(circRighOut);
-
-
-		PieceShape cir1Rig = new PieceShape(begin)
-				.addSegment(circBotOut)
-				.addSegment(circLeftOut)
-				.addSegment(circTopOut)
-				.addSegment(circRighMiddle);
-		 		
-		
-		/*Peça Circulo nº2 c/ várias alternativas*/
-		PieceShape cir2 = new PieceShape(begin)
-				.addSegment(circBotIn)
-				.addSegment(circLeftIn)
-				.addSegment(circTopIn)
-				.addSegment(circRighIn);
-
-		PieceShape cir2Top = new PieceShape(begin)
-				.addSegment(circBotIn)
-				.addSegment(circLeftIn)
-				.addSegment(circTopMiddle)
-				.addSegment(circRighIn);
-
-		PieceShape cir2TopLeft = new PieceShape(begin)
-				.addSegment(circBotIn)
-				.addSegment(circLeftMiddle)
-				.addSegment(circTopMiddle)
-				.addSegment(circRighIn);
-
-		PieceShape cir2TopRig = new PieceShape(begin)
-				.addSegment(circBotIn)
-				.addSegment(circLeftIn)
-				.addSegment(circTopMiddle)
-				.addSegment(circRighMiddle);
-
-		PieceShape cir2Bot = new PieceShape(begin)
-				.addSegment(circBotMiddle)
-				.addSegment(circLeftIn)
-				.addSegment(circTopIn)
-				.addSegment(circRighIn);
-
-		PieceShape cir2BotLeft = new PieceShape(begin)
-				.addSegment(circBotMiddle)
-				.addSegment(circLeftMiddle)
-				.addSegment(circTopIn)
-				.addSegment(circRighIn);
-
-		PieceShape cir2BotRig = new PieceShape(begin)
-				.addSegment(circBotMiddle)
-				.addSegment(circLeftIn)
-				.addSegment(circTopIn)
-				.addSegment(circRighMiddle);
-
-		PieceShape cir2Left = new PieceShape(begin)
-				.addSegment(circBotIn)
-				.addSegment(circLeftMiddle)
-				.addSegment(circTopIn)
-				.addSegment(circRighIn);
-
-		PieceShape cir2Rig = new PieceShape(begin)
-				.addSegment(circBotIn)
-				.addSegment(circLeftIn)
-				.addSegment(circTopIn)
-				.addSegment(circRighMiddle);
-				
-		
-		/* Colocar as peças no tabuleiro */
 		for (int c = 0; c < cols; c++) {
 			for (int r = 0; r < rows; r++) {
 				if (c % 2 == 0) {
