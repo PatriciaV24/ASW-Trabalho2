@@ -1,29 +1,30 @@
 package mpjp.shared.geom;
 
 import java.io.Serializable;
-
-public class Point implements Serializable {
 /**
-* 		public class Point
-*		extends java.lang.Object
-*		implements java.io.Serializable
-*		A pair or integer coordinates in the plane.
-*/
+ * A pair or integer coordinates in the plane. 
+ *
+ * @author Manuel Sá up201805273
+ * @author Patricia Vieira up201805238
+ *
+ */
+public class Point implements Serializable {
 	private static final long serialVersionUID = -682334289743594825L;
+	/**The horizontal coordinate of this point*/
 	double x;
+	/**The vertical coordinate of this point*/
 	double y;
-
 	
-
+	/** Constructor-Create an empty piece shape */
+	public Point(){
+	}
+	
+	/** Constructor-Create point from coordinates */
 	public Point(double x, double y){
 		this.x = x;
 		this.y = y;
 	}
 	
-	public Point(){
-		
-	}
-
 	public double getX() {
 		return x;
 	}
@@ -72,5 +73,4 @@ public class Point implements Serializable {
 	public String toString() {
 		return "Point [x=" + x + ", y=" + y + "]";
 	}
-
 }

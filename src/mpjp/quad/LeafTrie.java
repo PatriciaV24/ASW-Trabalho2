@@ -39,7 +39,7 @@ public class LeafTrie<T extends HasPoint> extends Trie<T> {
 
 	@Override
 	public T find(T point) {
-		for(T x: points) {
+		for(T x: this.points) {
 			if(x.getX()==point.getX() && x.getY()==point.getY()) 
 				return x;
 		}
