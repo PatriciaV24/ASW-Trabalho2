@@ -33,7 +33,7 @@ public class PuzzleLayout implements Serializable {
 		return pieces;
 	}
 
-	boolean isSolved() {
+	public boolean isSolved() {
 		if (blocks.size()==1)
 			return true;
 		return false;

@@ -46,7 +46,7 @@ class WorkspacePoolTest extends PuzzleData {
 	 */
 	@BeforeEach
 	void setUp() {
-		WorkspacePool.setPoolDiretory(MY_POOL_DIRECTORY); 	
+		WorkspacePool.setPoolDiretory​(MY_POOL_DIRECTORY); 	
 		pool = new WorkspacePool();
 		
 		ids.clear();
@@ -91,10 +91,10 @@ class WorkspacePoolTest extends PuzzleData {
 	 */
 	@Test
 	void test_poolDirectory_setter_and_getter() {
-		WorkspacePool.setPoolDiretory(new File("/usr/tmp"));
+		WorkspacePool.setPoolDiretory​(new File("/usr/tmp"));
 		assertEquals(new File("/usr/tmp"), WorkspacePool.getPoolDirectory());
 		
-		WorkspacePool.setPoolDiretory("/tmp");
+		WorkspacePool.setPoolDiretory​("/tmp");
 		assertEquals(new File("/tmp"), WorkspacePool.getPoolDirectory());
 	}
 		
@@ -108,7 +108,7 @@ class WorkspacePoolTest extends PuzzleData {
 	@ParameterizedTest
 	@EnumSource(Puzzle.class)		
 	void testCreateWorkspace(Puzzle puzzle) throws MPJPException {
-		String id = pool.createWorkspace(puzzle.getPuzzleInfo());
+		String id = pool.createWorkspace​(puzzle.getPuzzleInfo());
 		
 		ids.add(id);
 		
@@ -125,11 +125,11 @@ class WorkspacePoolTest extends PuzzleData {
 	@EnumSource(Puzzle.class)		
 	void testGetWorkspace(Puzzle puzzle) throws MPJPException {
 		PuzzleInfo info = puzzle.getPuzzleInfo();
-		String id = pool.createWorkspace(info);
+		String id = pool.createWorkspace​(info);
 		
 		ids.add(id);
 		
-		Workspace workspace = pool.getWorkspace(id);
+		Workspace workspace = pool.getWorkspace​(id);
 		PuzzleView view = workspace.getPuzzleView();
 		
 		assertEquals(info.getWidth(),view.getPuzzleWidth());
@@ -148,7 +148,7 @@ class WorkspacePoolTest extends PuzzleData {
 		Set<String> keys = null;
 		
 		for(Puzzle puzzle: Puzzle.values()) {
-			String id = pool.createWorkspace(puzzle.getPuzzleInfo());
+			String id = pool.createWorkspace​(puzzle.getPuzzleInfo());
 			ids.add(id);
 			
 			map = pool.getAvailableWorkspaces();
@@ -176,8 +176,8 @@ class WorkspacePoolTest extends PuzzleData {
 	@MethodSource("stringProvider")
 	void testGetFile(String name) {
 
-		File file  = pool.getFile(name);
-		File other = pool.getFile(name);
+		File file  = pool.getFile​(name);
+		File other = pool.getFile​(name);
 		
 		assertNotNull(file,"file expected");
 		assertNotNull(other,"file expected");
@@ -200,11 +200,11 @@ class WorkspacePoolTest extends PuzzleData {
 	void testBackup(Puzzle puzzle) throws MPJPException {
 		Workspace workspace = new Workspace(puzzle.getPuzzleInfo());
 		String id = workspace.getId();
-		File file = pool.getFile(id);
+		File file = pool.getFile​(id);
 		
 		assertFalse(file.exists(),"serialization file not yet expected");
 		
-		pool.backup(id, workspace);
+		pool.backup​(id, workspace);
 		ids.add(id);
 		
 		assertTrue(file.exists(),"serialization file expected");
@@ -224,10 +224,10 @@ class WorkspacePoolTest extends PuzzleData {
 		PuzzleView view = workspace.getPuzzleView();
 		String id = workspace.getId();
 
-		pool.backup(id, workspace);
+		pool.backup​(id, workspace);
 		ids.add(id);
 
-		Workspace copy = pool.recover(id);
+		Workspace copy = pool.recover​(id);
 		PuzzleView viewCopy = copy.getPuzzleView();
 		
 		assertEquals(workspace.getId(),copy.getId());
