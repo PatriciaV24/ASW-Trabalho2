@@ -24,7 +24,7 @@ import mpjp.shared.PuzzleView;
 import mpjp.shared.geom.Point;
 
 /**
- * Tests Workspace class bg
+ * Tests Workspace class
  *
  * @author Jos&eacute; paulo Leal {@code zp@dcc.fc.up.pt}
  */

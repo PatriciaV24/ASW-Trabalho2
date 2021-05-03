@@ -5,12 +5,12 @@ import java.util.Set;
 import mpjp.shared.HasPoint;
 
 public abstract class Trie<T extends HasPoint> implements Element<T> {
-	private static final int DEFAULTCAPACITY = 8;
+	
 	protected double bottomRightX;
 	protected double bottomRightY;
 	protected double topLeftX;
 	protected double topLeftY;
-	static int capacity;
+	static int capacity = 8;
 
 	public enum Quadrant{
 		NE,NW,SE,SW;
@@ -21,7 +21,7 @@ public abstract class Trie<T extends HasPoint> implements Element<T> {
 		this.bottomRightY = bottomRightY;
 		this.topLeftX = topLeftX;
 		this.topLeftY = topLeftY;
-		capacity=DEFAULTCAPACITY; 
+		 
 	}
 	
 	

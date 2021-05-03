@@ -16,6 +16,7 @@ import mpjp.shared.MPJPException;
 import mpjp.shared.geom.PieceShape;
 import mpjp.shared.geom.Point;
 
+
 /**
  * Test application for viewing cuttings. It does not depend of the factory
  * and new binary names can be easily added.
