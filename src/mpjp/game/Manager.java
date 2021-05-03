@@ -1,54 +1,62 @@
 package mpjp.game;
 
-import java.awt.Point;
 import java.util.Map;
 import java.util.Set;
 
+import mpjp.game.cuttings.CuttingFactoryImplementation;
+import mpjp.shared.MPJPException;
 import mpjp.shared.PuzzleInfo;
 import mpjp.shared.PuzzleLayout;
 import mpjp.shared.PuzzleSelectInfo;
 import mpjp.shared.PuzzleView;
+import mpjp.shared.geom.Point;
 
 public class Manager {
-	PuzzleLayout conect(String workspaceId, int pieceId, Point point) {
-		return; //TODO
-	}
-
-	String createWorkspace(PuzzleInfo info) {
-		return;
-	}
-
-	Set<String> getAvailableCutting() {
-
-	}
-
-	Set<String> getAvailableImages() {
-
-	}
-
-	Map<String, PuzzleSelectInfo> getAvailableCutting() {
-
+	
+	private WorkspacePool workspacePool; 
+	private static Manager manager = new Manager(); 
+	
+	private Manager() {
+		workspacePool = new WorkspacePool();
 	}
 	
-	PuzzleLayout getCurrentLayout(String workspaceId) {
-		
+	public static Manager getInstance() {
+		return manager;
 	}
-	
-	static Manager getInstance() {
-		
-	}
-	
-	PuzzleView getPuzzleView(String spaceId) {
-		
-	}
-	
+
 	void reset() {
-		
+		workspacePool = new WorkspacePool(); 
+	}
+
+	public Set<String> getAvailableCuttings() {
+		return new CuttingFactoryImplementation().getAvailableCuttings();
+	}
+
+	public Set<String> getAvailableImages() {
+		return Images.getAvailableImages();
+	}
+
+	public Map<String,PuzzleSelectInfo> getAvailableWorkspaces(){
+		return workspacePool.getAvailableWorkspaces();
+	}
+
+	public String createWorkspace(PuzzleInfo info) throws MPJPException {
+		return workspacePool.createWorkspace​(info);
+	}
+
+	public Integer selectPiece(String workspaceId, Point point) throws MPJPException {
+		return workspacePool.getWorkspace​(workspaceId).selectPiece(point);
+	}
+
+	public PuzzleLayout connect(String workspaceId, int pieceId, Point point) throws MPJPException {
+		return workspacePool.getWorkspace​(workspaceId).connect(pieceId, point);
+	}
+
+	public PuzzleView getPuzzleView(String workspaceId) throws MPJPException {
+		return workspacePool.getWorkspace​(workspaceId).getPuzzleView();
 	}
 	
-	Integer selectPiece(String workspaceId, Point point) {
-		
+	public PuzzleLayout getCurrentLayout(String workspaceId)throws MPJPException{
+		return workspacePool.getWorkspace​(workspaceId).getCurrentLayout();
 	}
-	
-	
 }
